@@ -1,0 +1,146 @@
+{
+  "name": "suspenders",
+  "displayName": "Suspenders",
+  "description": "PantsBuild support in Visual Studio Code",
+  "version": "0.0.1",
+  "publisher": "robotpajamas",
+  "preview": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobotPajamas/suspenders"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RobotPajamas/suspenders/issues"
+  },
+  "homepage": "https://github.com/RobotPajamas/suspenders",
+  "keywords": [
+    "build",
+    "buildsystem",
+    "monorepo",
+    "pants",
+    "pantsbuild",
+    "tools"
+  ],
+  "engines": {
+    "vscode": "^1.69.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:pants.toml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "suspenders.checkAll",
+        "title": "Run `check` goal on all targets",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.fmtAll",
+        "title": "Run `fmt` goal on all targets",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.lintAll",
+        "title": "Run `lint` goal on all targets",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.testAll",
+        "title": "Run `test` goal on all targets",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.source-roots.refresh",
+        "title": "Refresh source roots",
+        "icon": "$(refresh)",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.targets.refresh",
+        "title": "Refresh targets",
+        "icon": "$(refresh)",
+        "category": "Pants"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "suspenders.checkAll",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "command": "suspenders.fmtAll",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "command": "suspenders.lintAll",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "command": "suspenders.testAll",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "command": "suspenders.source-roots.refresh",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "command": "suspenders.targets.refresh",
+          "when": "suspenders:isActivated"
+        }
+
+      ],
+      "view/title": [
+        {
+          "command": "suspenders.source-roots.refresh",
+          "group": "navigation",
+          "when": "view == source-roots"
+        },
+        {
+          "command": "suspenders.targets.refresh",
+          "group": "navigation",
+          "when": "view == targets"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pantsbuild-pants",
+          "title": "Pants Explorer",
+          "icon": "assets/pants-logo.svg",
+          "when": "suspenders:isActivated"
+        }
+      ]
+    },
+    "views": {
+      "pantsbuild-pants": [
+        {
+          "id": "source-roots",
+          "name": "Source Roots",
+          "when": "suspenders:isActivated"
+        },
+        {
+          "id": "targets",
+          "name": "Targets",
+          "when": "suspenders:isActivated"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.69.1",
+    "@types/node": "16.x",
+    "typescript": "^4.7.4"
+  }
+}
