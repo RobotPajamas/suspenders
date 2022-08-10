@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "publisher": "robotpajamas",
   "preview": true,
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/RobotPajamas/suspenders"
@@ -23,11 +24,12 @@
     "tools"
   ],
   "engines": {
-    "vscode": "^1.69.1"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
   ],
+  "icon": "assets/pants-logo-square.png",
   "activationEvents": [
     "workspaceContains:pants.toml"
   ],
