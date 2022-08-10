@@ -1,27 +1,27 @@
 # Suspenders
 
-Keep those Pants up
+Suspenders is a (very) alpha VS Code extension to provide [Pants](https://github.com/pantsbuild/pants) users with some quality-of-workflow improvements.
 
-## Heads up
+The extension is loaded upon there being a `pants.toml` file in the workspace root.
 
-I've never written a VS Code Extension before, so this repo is basically just a hack to learn about the VS Code APIs and seeing what is possible and what isn't.
+## Available Functionality
 
-None of this code should be presumed to be "good", "clean", "reasonable", "correct", etc...
+Suspenders functionality is very limited at the moment.
 
-The end goal of this extension is to make Pants introspection a bit easier, as well as some commands in the Command Palette to save some typing.
+The preliminary aims are related to streamlining [project introspection](https://www.pantsbuild.org/docs/project-introspection) by creating a view container which shows source roots, targets, etc.
 
-## How to Use?
+In addition, the command palette has been enhanced with several pants specific commands:
 
-There is no package or distribution yet, so you'll need to perform the following to test out this repo (explained here: https://code.visualstudio.com/api/get-started/your-first-extension).
+- Run `check` goal on all targets
+- Run `fmt` goal on all targets
+- Run `lint` goal on all targets
+- Run `test` goal on all targets
 
-```bash
-npm install
-npm run compile
+## Important Links
 
-# Ensure this repo is opened in VS Code
-code .
+- [Pants Documentation](https://www.pantsbuild.org/)
+- [Pants Slack channel](https://www.pantsbuild.org/docs/getting-help#slack)
 
-# Press F5 to run this extension in a new "Extension Development Host" window
-```
+## Feature Requests and Bugs
 
-If there is a `pants.toml` in the workspace root of the newly opened window, the Suspenders extension will activate in the Activity Bar - and the Pants commands will be available in the palette.
+Any suggestions or issues can be added to the Suspenders Github issue list: https://github.com/RobotPajamas/suspenders/issues

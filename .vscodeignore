@@ -1,4 +1,4 @@
-.vscode
-node_modules
+.vscode/
+node_modules/
 src/
 tsconfig.json

@@ -2,49 +2,50 @@ import * as vscode from "vscode";
 import * as proc from "child_process";
 import { SourceRootsProvider } from "./source-roots-provider";
 import { TargetsProvider } from "./targets-provider";
-
-let loggingChannel: vscode.OutputChannel;
+import { logger } from "./logging";
 
 function runGoalOnAllTargets(name: string, cwd?: string): void {
+  logger.show();
+
   const options: proc.SpawnOptions = {
     cwd,
   };
   const subprocess = proc.spawn("./pants", [name, "::"], options);
-  subprocess.stdout?.on("data", (data) =>
-    loggingChannel.appendLine(data.toString())
-  );
-  subprocess.stderr?.on("data", (data) =>
-    loggingChannel.appendLine(data.toString())
-  );
+  subprocess.stdout?.on("data", (data) => logger.log(data.toString()));
+  subprocess.stderr?.on("data", (data) => logger.log(data.toString()));
 }
 
+const extensionName = "robotpajamas.vscode-suspenders";
+const extensionVersion = "0.0.1";
+
 export function activate(context: vscode.ExtensionContext) {
+  logger.info(`Extension name: ${extensionName}`);
+  logger.info(`Extension version: ${extensionVersion}`);
+
   const rootPath =
     vscode.workspace.workspaceFolders &&
     vscode.workspace.workspaceFolders.length > 0
       ? vscode.workspace.workspaceFolders[0].uri.fsPath
       : undefined;
 
-  loggingChannel = vscode.window.createOutputChannel("Suspenders");
-
   context.subscriptions.push(
     vscode.commands.registerCommand("suspenders.checkAll", () => {
-      runGoalOnAllTargets("check");
+      runGoalOnAllTargets("check", rootPath);
     })
   );
   context.subscriptions.push(
     vscode.commands.registerCommand("suspenders.fmtAll", () => {
-      runGoalOnAllTargets("fmt");
+      runGoalOnAllTargets("fmt", rootPath);
     })
   );
   context.subscriptions.push(
     vscode.commands.registerCommand("suspenders.lintAll", () => {
-      runGoalOnAllTargets("lint");
+      runGoalOnAllTargets("lint", rootPath);
     })
   );
   context.subscriptions.push(
     vscode.commands.registerCommand("suspenders.testAll", () => {
-      runGoalOnAllTargets("test");
+      runGoalOnAllTargets("test", rootPath);
     })
   );
 
