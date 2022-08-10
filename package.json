@@ -1,7 +1,7 @@
 {
   "name": "suspenders",
   "displayName": "Suspenders",
-  "description": "PantsBuild support in Visual Studio Code",
+  "description": "PantsBuild support for VS Code",
   "version": "0.0.1",
   "publisher": "robotpajamas",
   "preview": true,
@@ -24,9 +24,13 @@
     "tools"
   ],
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.65.0"
   },
   "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Linters",
+    "Testing",
     "Other"
   ],
   "icon": "assets/pants-logo-square.png",
@@ -142,7 +146,7 @@
     "watch": "npm run esbuild-base -- --sourcemap --watch"
   },
   "devDependencies": {
-    "@types/vscode": "^1.69.1",
+    "@types/vscode": "^1.65.0",
     "@types/node": "16.x",
     "esbuild": "^0.14.54",
     "typescript": "^4.7.4"
