@@ -17,6 +17,10 @@ In addition, the command palette has been enhanced with several pants specific c
 - Run `lint` goal on all targets
 - Run `test` goal on all targets
 
+## Using Pants
+
+Pants has recently added first-party support for NodeJS/Javascript files (more than just formatters), but there is no Typescript support as of: `PANTS_SHA=7fca4215f67b3756bd2ac723cb4cefcf83273ab3 pants fmt ::`.
+
 ## Important Links
 
 - [Pants Documentation](https://www.pantsbuild.org/)
