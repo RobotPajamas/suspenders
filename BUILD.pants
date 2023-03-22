@@ -1,0 +1,4 @@
+# TODO: Does not support TS
+javascript_sources(
+    name="lib",
+)
