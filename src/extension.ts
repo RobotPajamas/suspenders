@@ -23,8 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
   logger.info(`Extension version: ${extensionVersion}`);
 
   const rootPath =
-    vscode.workspace.workspaceFolders &&
-    vscode.workspace.workspaceFolders.length > 0
+    vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0
       ? vscode.workspace.workspaceFolders[0].uri.fsPath
       : undefined;
 
@@ -57,9 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const targetsProvider = new TargetsProvider(rootPath);
   vscode.window.registerTreeDataProvider("targets", targetsProvider);
-  vscode.commands.registerCommand("suspenders.targets.refresh", () =>
-    targetsProvider.refresh()
-  );
+  vscode.commands.registerCommand("suspenders.targets.refresh", () => targetsProvider.refresh());
 
   vscode.commands.executeCommand("setContext", "suspenders:isActivated", true);
 }

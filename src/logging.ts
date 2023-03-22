@@ -8,7 +8,7 @@ class Logger {
   log(message: string, level?: LOG_LEVEL) {
     // TODO: Wrap in a level check
     if (level) {
-        this.channel.append(`[${level}] `)
+      this.channel.append(`[${level}] `);
     }
     this.channel.appendLine(`${message}`);
   }

@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import * as proc from "child_process";
-import * as path from "path";
 
 export class TargetsProvider implements vscode.TreeDataProvider<Target> {
   private _onDidChangeTreeData: vscode.EventEmitter<Target | undefined | void> =
@@ -24,21 +23,17 @@ export class TargetsProvider implements vscode.TreeDataProvider<Target> {
       return Promise.resolve([]);
     }
 
-    const executable = path.join(this.rootPath, "pants");
+    const executable = "pants";
     if (element) {
       const stdout = proc
         .execSync(`${executable} dependencies --transitive ${element.label}`)
         .toString()
         .trim();
       const targetLines = stdout.split("\n");
-      const targets = targetLines.map(
-        (t) => new Target(t, vscode.TreeItemCollapsibleState.None)
-      );
+      const targets = targetLines.map((t) => new Target(t, vscode.TreeItemCollapsibleState.None));
       return Promise.resolve(targets);
     } else {
-      const stdout = proc
-        .execSync(`${executable} filter --filter-granularity=BUILD ::`)
-        .toString();
+      const stdout = proc.execSync(`${executable} filter --filter-granularity=BUILD ::`).toString();
       const targetLines = stdout.split("\n");
       const targets = targetLines.map(
         (t) => new Target(t, vscode.TreeItemCollapsibleState.Collapsed)
