@@ -26,14 +26,18 @@ export class TargetsProvider implements vscode.TreeDataProvider<Target> {
     const executable = "pants";
     if (element) {
       const stdout = proc
-        .execSync(`${executable} dependencies --transitive ${element.label}`)
+        .execSync(`${executable} dependencies --transitive ${element.label}`, {
+          cwd: this.rootPath,
+        })
         .toString()
         .trim();
       const targetLines = stdout.split("\n");
       const targets = targetLines.map((t) => new Target(t, vscode.TreeItemCollapsibleState.None));
       return Promise.resolve(targets);
     } else {
-      const stdout = proc.execSync(`${executable} filter --filter-granularity=BUILD ::`).toString();
+      const stdout = proc
+        .execSync(`${executable} filter --filter-granularity=BUILD ::`, { cwd: this.rootPath })
+        .toString();
       const targetLines = stdout.split("\n");
       const targets = targetLines.map(
         (t) => new Target(t, vscode.TreeItemCollapsibleState.Collapsed)

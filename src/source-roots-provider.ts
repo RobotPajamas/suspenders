@@ -24,7 +24,7 @@ export class SourceRootsProvider implements vscode.TreeDataProvider<SourceRoot> 
     }
 
     const executable = "pants";
-    const stdout = proc.execSync(`${executable} roots`).toString().trim();
+    const stdout = proc.execSync(`${executable} roots`, { cwd: this.rootPath }).toString().trim();
     const roots = stdout.split("\n");
     const sourceRoots = roots.map((r) => new SourceRoot(r));
     return Promise.resolve(sourceRoots);
