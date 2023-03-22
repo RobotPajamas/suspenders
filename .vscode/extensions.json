@@ -1,0 +1,4 @@
+// Installing "Even Better TOML" allows you to use a pants.toml-centric JSON Schema
+{
+  "recommendations": ["tamasfe.even-better-toml"]
+}
