@@ -136,7 +136,30 @@
           "when": "suspenders:isActivated"
         }
       ]
-    }
+    },
+    "languages": [
+      {
+        "id": "pantsbuild",
+        "aliases": [
+          "PantsBuild",
+          "pantsbuild"
+        ],
+        "filenames": [
+          "BUILD"
+        ],
+        "extensions": [
+          ".pants"
+        ],
+        "configuration": "./syntaxes/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "pantsbuild",
+        "scopeName": "source.pantsbuild",
+        "path": "./syntaxes/pantsbuild.tmLanguage.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",

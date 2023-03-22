@@ -17,6 +17,10 @@ In addition, the command palette has been enhanced with several pants specific c
 - Run `lint` goal on all targets
 - Run `test` goal on all targets
 
+## Recommended Plugins
+
+- [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) - Provides syntax highlighting for `pants.toml` files, and allows using a Pants.toml JSON schema for validation.
+
 ## Using Pants
 
 Pants has recently added first-party support for NodeJS/Javascript files (more than just formatters), but there is no Typescript support as of: `PANTS_SHA=7fca4215f67b3756bd2ac723cb4cefcf83273ab3 pants fmt ::`.
