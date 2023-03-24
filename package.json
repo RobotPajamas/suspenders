@@ -61,6 +61,16 @@
         "category": "Pants"
       },
       {
+        "command": "suspenders.testTarget",
+        "title": "Test Target",
+        "category": "Pants"
+      },
+      {
+        "command": "suspenders.testTargetTransitively",
+        "title": "Test Target Transitively",
+        "category": "Pants"
+      },
+      {
         "command": "suspenders.source-roots.refresh",
         "title": "Refresh source roots",
         "icon": "$(refresh)",
@@ -98,6 +108,18 @@
         {
           "command": "suspenders.targets.refresh",
           "when": "suspenders:isActivated"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "suspenders.testTarget",
+          "group": "suspenders",
+          "when": "view == targets && viewItem == test"
+        },
+        {
+          "command": "suspenders.testTargetTransitively",
+          "group": "suspenders",
+          "when": "view == targets && viewItem == test"
         }
       ],
       "view/title": [

@@ -61,6 +61,7 @@ export class TargetTreeItem extends vscode.TreeItem implements PantsTreeItem {
     const label = `${target.address.targetName} (${target.type})`;
     super(label, vscode.TreeItemCollapsibleState.None);
     this.iconPath = this.getIcon(target.type);
+    this.contextValue = "test"; // TODO: Testing something
     this.command = {
       command: "vscode.open",
       title: "Open this BUILD file",
