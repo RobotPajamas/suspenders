@@ -199,6 +199,19 @@
         }
       ]
     },
+    "grammars": [
+      {
+        "language": "pantsbuild",
+        "scopeName": "source.pantsbuild",
+        "path": "./syntaxes/pantsbuild.tmLanguage.json"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "lift*.json",
+        "url": "./schemas/lift.schema.json"
+      }
+    ],
     "languages": [
       {
         "id": "pantsbuild",
@@ -215,11 +228,14 @@
         "configuration": "./syntaxes/language-configuration.json"
       }
     ],
-    "grammars": [
+    "tomlValidation": [
       {
-        "language": "pantsbuild",
-        "scopeName": "source.pantsbuild",
-        "path": "./syntaxes/pantsbuild.tmLanguage.json"
+        "fileMatch": "pants.toml",
+        "url": "https://json.schemastore.org/pantsbuild-2.15.0"
+      },
+      {
+        "fileMatch": "science.toml",
+        "url": "./schemas/science.schema.json"
       }
     ]
   },

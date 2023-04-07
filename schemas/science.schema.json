@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Science config",
+  "type": "object",
+  "properties": {
+    "science": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interpreters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "lazy": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": ["id", "provider", "lazy", "version"]
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": ["name"]
+          }
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "exe": {
+                "type": "string"
+              },
+              "args": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "env": {
+                "type": "object",
+                "properties": {
+                  "remove_re": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "replace": {
+                    "type": "object",
+                    "properties": {
+                      "PEX_ROOT": {
+                        "type": "string"
+                      },
+                      "PEX_PYTHON_PATH": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["PEX_ROOT", "PEX_PYTHON_PATH"]
+                  }
+                },
+                "required": ["remove_re", "replace"]
+              }
+            },
+            "required": ["exe", "args", "env"]
+          }
+        }
+      },
+      "required": ["name", "description", "platforms", "interpreters", "files", "commands"]
+    }
+  },
+  "required": ["science"]
+}
