@@ -4,7 +4,9 @@ import { GoalArg, Options } from "./goals";
 // TODO: Sanitize any executable arguments
 
 export class Pants {
-  private readonly pantsExe = "pants";
+  // private readonly pantsExe = "pants";
+  // TODO: Running into a peek problem while trying to PR to main
+  private readonly pantsExe = "./pants_from_sources";
 
   /**
    *
