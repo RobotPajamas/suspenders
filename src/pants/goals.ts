@@ -40,6 +40,8 @@ export type PeekResult = {
   address: string;
   target_type: string;
   dependencies: string[];
+  goals: string[];
+  source_raw: string;
   sources: string[];
   sources_fingerprint: string;
 };
