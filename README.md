@@ -2,6 +2,8 @@
 
 Suspenders is a (very) alpha VS Code extension to provide [Pants](https://github.com/pantsbuild/pants) users with some quality-of-workflow improvements.
 
+**Note:** A lot of this functionality is proof-of-concept, as Pants requires some additions and optimizations to be able to provide a good experience in VS Code. This extension is being used to determine what can be done, and what needs to be added to Pants. As features are added in Pants, those features can remove the "proof-of-concept" label from this extension.
+
 The extension is loaded upon there being a `pants.toml` file in the workspace root.
 
 ## Available Functionality
