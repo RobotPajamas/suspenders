@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Lift files",
+  "type": "object",
+  "properties": {
+    "scie": {
+      "type": "object",
+      "properties": {
+        "lift": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "boot": {
+              "type": "object",
+              "properties": {
+                "commands": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "env": {
+                          "type": "object",
+                          "properties": {
+                            "=PATH": {
+                              "type": "string"
+                            },
+                            "PEX_.*": {}
+                          },
+                          "required": ["=PATH", "PEX_.*"]
+                        },
+                        "exe": {
+                          "type": "string"
+                        },
+                        "args": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": ["description", "env", "exe", "args"]
+                    },
+                    "repl": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "env": {
+                          "type": "object",
+                          "properties": {
+                            "=PATH": {
+                              "type": "string"
+                            },
+                            "=PYTHONPATH": {}
+                          },
+                          "required": ["=PATH", "=PYTHONPATH"]
+                        },
+                        "exe": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["description", "env", "exe"]
+                    }
+                  },
+                  "required": ["", "repl"]
+                },
+                "bindings": {
+                  "type": "object",
+                  "properties": {
+                    "venv": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "env": {
+                          "type": "object",
+                          "properties": {
+                            "=PATH": {
+                              "type": "string"
+                            },
+                            "PEX_TOOLS": {
+                              "type": "string"
+                            },
+                            "PEX_ROOT": {
+                              "type": "string"
+                            },
+                            "PEX_.*": {}
+                          },
+                          "required": ["=PATH", "PEX_TOOLS", "PEX_ROOT", "PEX_.*"]
+                        },
+                        "exe": {
+                          "type": "string"
+                        },
+                        "args": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": ["description", "env", "exe", "args"]
+                    }
+                  },
+                  "required": ["venv"]
+                }
+              },
+              "required": ["commands", "bindings"]
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          },
+          "required": ["name", "description", "boot", "files"]
+        }
+      },
+      "required": ["lift"]
+    }
+  },
+  "required": ["scie"]
+}
