@@ -66,6 +66,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   const codeLensProvider = new CodeLensProvider();
   vscode.languages.registerCodeLensProvider({ pattern: "**/BUILD*" }, codeLensProvider);
+
+  const testController = vscode.tests.createTestController("suspenders-test-controller", "All of the Tests");
+  // Using the new Peek modifications, find all `test`able targets and create a test item for each
+  testController.items.add(testController.createTestItem("test", "Test 1"));
+  testController.items.add(testController.createTestItem("test1", "Test 2"));
+  testController.items.add(testController.createTestItem("test2", "Test 3"));
 }
 
 export function deactivate() {
