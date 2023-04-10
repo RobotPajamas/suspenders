@@ -1,8 +1,9 @@
 import * as vscode from "vscode";
 import * as proc from "child_process";
-import { SourceRootsProvider } from "./source-roots-provider";
-import { TargetsProvider } from "./targets-provider";
+import { TargetsProvider, SourceRootsProvider } from "./treeviews";
 import { logger } from "./logging";
+import { CodeLensProvider } from "./codelens";
+import { TestsProvider } from "./test-explorer";
 
 // TODO: Destructure vscode imports
 
@@ -67,11 +68,12 @@ export function activate(context: vscode.ExtensionContext) {
   const codeLensProvider = new CodeLensProvider();
   vscode.languages.registerCodeLensProvider({ pattern: "**/BUILD*" }, codeLensProvider);
 
-  const testController = vscode.tests.createTestController("suspenders-test-controller", "All of the Tests");
-  // Using the new Peek modifications, find all `test`able targets and create a test item for each
-  testController.items.add(testController.createTestItem("test", "Test 1"));
-  testController.items.add(testController.createTestItem("test1", "Test 2"));
-  testController.items.add(testController.createTestItem("test2", "Test 3"));
+  const testController = vscode.tests.createTestController(
+    "suspenders-test-controller",
+    "All of the Tests"
+  );
+  const testsProvider = new TestsProvider(testController);
+  vscode.commands.registerCommand("suspenders.tests.refresh", () => testsProvider.refresh());
 }
 
 export function deactivate() {
@@ -79,68 +81,4 @@ export function deactivate() {
   //   disposables.forEach((item) => item.dispose());
   // }
   // disposables = [];
-}
-
-export class CodeLensProvider implements vscode.CodeLensProvider {
-  private codeLenses: vscode.CodeLens[] = [];
-  private regex: RegExp;
-  private _onDidChangeCodeLenses: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
-  public readonly onDidChangeCodeLenses: vscode.Event<void> = this._onDidChangeCodeLenses.event;
-
-  constructor() {
-    this.regex = /(.+)/g;
-
-    // TODO: Wrap this in a check for whether the code lens config (when created) actually changed or not
-    vscode.workspace.onDidChangeConfiguration((_) => {
-      this._onDidChangeCodeLenses.fire();
-    });
-  }
-
-  public async provideCodeLenses(
-    document: vscode.TextDocument,
-    token: vscode.CancellationToken
-  ): Promise<vscode.CodeLens[]> {
-    // Don't show lenses if file isn't saved, since they'll be janky and we don't want to accidentally run the wrong command on the wrong args
-    if (document.isDirty) {
-      return [];
-    }
-
-    // Can we use Peek to get the targets for this file? Or is it faster to just parse the document?
-    // Alternatively, when we build out the tree - we already kinda have targets for this BUILD file
-    // As a cheapo - could just grab all known target aliases and then regex down - not performant, but just a first pass
-    const fakeTargets = ["pyoxidizer_binary", "scie_binary", "python_test"]; // yada yada
-    const aliasToGoals: { [key: string]: string[] } = {
-      pyoxidizer_binary: ["Package", "Run"],
-      scie_binary: ["Package", "Run"],
-      python_test: ["Test"],
-    };
-
-    const regex = new RegExp(fakeTargets.join("|"), "g");
-    const text = document.getText();
-
-    // Create a codelens for each regex match
-    const fakeLenses = [];
-    let matches;
-    while ((matches = regex.exec(text)) !== null) {
-      const line = document.lineAt(document.positionAt(matches.index).line);
-      const indexOf = line.text.indexOf(matches[0]);
-      const position = new vscode.Position(line.lineNumber, indexOf);
-      const range = document.getWordRangeAtPosition(position, new RegExp(fakeTargets.join("|")));
-      if (range) {
-        const alias = matches[0];
-        const goals = aliasToGoals[alias];
-        for (const goal of goals) {
-          fakeLenses.push(
-            new vscode.CodeLens(range, {
-              title: goal,
-              command: "suspenders.todo", // do something
-              tooltip: `${goal} ${alias}`,
-              // arguments: [document, range],
-            })
-          );
-        }
-      }
-    }
-    return fakeLenses;
-  }
 }
