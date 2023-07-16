@@ -24,7 +24,9 @@
     "tools"
   ],
   "engines": {
-    "vscode": "^1.76.0"
+    "node": "^20.0.0",
+    "pnpm": "^8.0.0",
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Programming Languages",
@@ -240,21 +242,30 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "vscode:prepublish": "pnpm run esbuild-base -- --minify",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "npm run esbuild-base -- --sourcemap",
-    "test": "npm run build && node ./dist/tests/runTest.js",
+    "build": "pnpm run esbuild-base -- --sourcemap",
+    "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
+    "eslint:fix": "eslint --ignore-path .gitignore . --fix",
+    "format": "pnpm prettier:fix",
+    "lint": "pnpm prettier && pnpm eslint",
+    "lint:fix": "pnpm prettier:fix && pnpm eslint:fix",
+    "prettier": "prettier --ignore-path .prettierignore --plugin-search-dir=. --check .",
+    "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
+    "test": "pnpm run build && node ./dist/tests/runTest.js",
     "test-compile": "tsc -p ./",
-    "watch": "npm run esbuild-base -- --sourcemap --watch"
+    "watch": "pnpm run esbuild-base -- --sourcemap --watch"
   },
   "devDependencies": {
-    "@types/node": "16.x",
-    "@types/vscode": "^1.76.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "eslint": "^8.36.0",
-    "esbuild": "^0.17.12",
-    "typescript": "^4.8.4",
-    "@vscode/test-electron": "^2.3.0"
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "esbuild": "^0.18.13",
+    "prettier": "^3.0.0",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "typescript": "^5.1.6",
+    "@vscode/test-electron": "^2.3.3"
   }
 }

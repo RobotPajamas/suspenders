@@ -33,7 +33,10 @@ export class FolderTreeItem extends vscode.TreeItem implements PantsTreeItem {
    * @param subtree
    * @param runner
    */
-  constructor(readonly subtree: PeekTree, readonly buildRoot: string) {
+  constructor(
+    readonly subtree: PeekTree,
+    readonly buildRoot: string
+  ) {
     super(subtree.name, vscode.TreeItemCollapsibleState.Collapsed);
     this.iconPath = new vscode.ThemeIcon("folder");
   }
