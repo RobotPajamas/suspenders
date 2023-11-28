@@ -24,9 +24,9 @@
     "tools"
   ],
   "engines": {
-    "node": "^20.0.0",
-    "pnpm": "^8.0.0",
-    "vscode": "^1.80.0"
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0",
+    "vscode": ">=1.84.0"
   },
   "categories": [
     "Programming Languages",
@@ -257,15 +257,15 @@
     "watch": "pnpm run esbuild-base -- --sourcemap --watch"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/vscode": "^1.80.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.45.0",
-    "esbuild": "^0.18.13",
-    "prettier": "^3.0.0",
-    "prettier-plugin-organize-imports": "^3.2.3",
-    "typescript": "^5.1.6",
-    "@vscode/test-electron": "^2.3.3"
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.84.2",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.54.0",
+    "esbuild": "^0.19.8",
+    "prettier": "^3.1.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "typescript": "^5.3.2"
   }
 }
