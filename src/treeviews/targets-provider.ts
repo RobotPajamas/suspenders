@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
-import { Pants } from "./pants/runner";
-import { list, peek, PeekResult } from "./pants/goals";
-import { Address } from "./pants/address";
+import { list, peek, PeekResult, Address, Pants } from "../pants";
 
 export class TargetsProvider implements vscode.TreeDataProvider<PantsTreeItem> {
   private runner: Pants;

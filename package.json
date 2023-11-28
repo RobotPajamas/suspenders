@@ -24,7 +24,9 @@
     "tools"
   ],
   "engines": {
-    "vscode": "^1.84.0"
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0",
+    "vscode": ">=1.84.0"
   },
   "categories": [
     "Programming Languages",
@@ -235,26 +237,35 @@
       },
       {
         "fileMatch": "science.toml",
-        "url": "./schemas/science.schema.json"
+        "url": "https://json.schemastore.org/cargo.json"
       }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "vscode:prepublish": "pnpm run esbuild-base --minify",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "npm run esbuild-base -- --sourcemap",
-    "test": "npm run build && node ./dist/tests/runTest.js",
+    "build": "pnpm run esbuild-base --sourcemap",
+    "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
+    "eslint:fix": "eslint --ignore-path .gitignore . --fix",
+    "format": "pnpm prettier:fix",
+    "lint": "pnpm prettier && pnpm eslint",
+    "lint:fix": "pnpm prettier:fix && pnpm eslint:fix",
+    "prettier": "prettier --ignore-path .prettierignore --plugin-search-dir=. --check .",
+    "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
+    "test": "pnpm run build && node ./dist/tests/runTest.js",
     "test-compile": "tsc -p ./",
-    "watch": "npm run esbuild-base -- --sourcemap --watch"
+    "watch": "pnpm run esbuild-base --sourcemap --watch"
   },
   "devDependencies": {
-    "@types/node": "20.x",
+    "@types/node": "^20.10.0",
     "@types/vscode": "^1.84.2",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
     "@typescript-eslint/parser": "^6.13.0",
     "@vscode/test-electron": "^2.3.8",
     "eslint": "^8.54.0",
     "esbuild": "^0.19.8",
+    "prettier": "^3.1.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.3.2"
   }
 }

@@ -1,3 +1,7 @@
+# Note: This will currently not work!
+
+The merged code is in the process of being cleaned up and re-written, and it requires a change to `peek` that has not been mainlined. So, for a few weeks, this source code will be super janky.
+
 # Suspenders
 
 Suspenders is a (very) alpha VS Code extension to provide [Pants](https://github.com/pantsbuild/pants) users with some quality-of-workflow improvements.

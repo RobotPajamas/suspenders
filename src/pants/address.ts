@@ -6,7 +6,10 @@ export class Address {
    * @param path The path from the build root to the directory containing the BUILD file for the target.
    * @param targetName The name of the target. For generated targets, this is the name of its target generator.
    */
-  constructor(readonly path: string, readonly targetName: string) {}
+  constructor(
+    readonly path: string,
+    readonly targetName: string
+  ) {}
 
   get address(): string {
     return `${this.path}:${this.targetName}`;
