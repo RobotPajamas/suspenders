@@ -1,18 +1,15 @@
 import { execSync } from "child_process";
 import { GoalArg, Options } from "./goals";
+import { getPantsExecutable } from "../configuration";
 
 // TODO: Sanitize any executable arguments
 
 export class Pants {
-  // private readonly pantsExe = "pants";
-  // TODO: Running into a peek problem while trying to PR to main
-  private readonly pantsExe = "./pants_from_sources";
-
   /**
    *
    * @param buildRoot The root of the Pants build, which is the directory containing the pants.toml file.
    */
-  constructor(readonly buildRoot: string) {}
+  constructor(readonly buildRoot: string, readonly exe: string = getPantsExecutable()) { }
 
   /**
    * Run a Pants goal with any optional scoped options (e.g. global options or scoped goal options).
@@ -29,7 +26,7 @@ export class Pants {
     }
 
     // Build up the command from the executable, scoped options, goals, and target
-    const args = [this.pantsExe];
+    const args = [this.exe];
     if (scopedOptions) {
       args.push(...this.buildOptions(scopedOptions));
     }

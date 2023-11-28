@@ -105,6 +105,18 @@
         "category": "Pants"
       }
     ],
+    "configuration": {
+      "title": "Suspenders",
+      "properties": {
+        "suspenders.executable": {
+          "description": "Path to the Pants executable.",
+          "type": "string",
+          "default": "pants",
+          "order": 0,
+          "scope": "machine-overridable"
+        }
+      }
+    },
     "menus": {
       "commandPalette": [
         {
@@ -252,8 +264,10 @@
     "lint:fix": "pnpm prettier:fix && pnpm eslint:fix",
     "prettier": "prettier --ignore-path .prettierignore --plugin-search-dir=. --check .",
     "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
-    "test": "pnpm run build && node ./dist/tests/runTest.js",
-    "test-compile": "tsc -p ./",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "pnpm run build && node ./dist/tests/runTest.js",
+    "test:watch": "vitest",
     "watch": "pnpm run esbuild-base --sourcemap --watch"
   },
   "devDependencies": {
@@ -266,6 +280,7 @@
     "esbuild": "^0.19.8",
     "prettier": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   }
 }
