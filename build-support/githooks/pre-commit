@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Disallow direct commits to master or main
+
+set -e
+
+# pre-commit runs in the context of GIT_WORK_TREE, ie: pwd == REPO_ROOT
+source build-support/common.sh
+
+BRANCH=$(git branch --show-current)
+
+if [[ "$BRANCH" == "master" || "$BRANCH" == "main" ]]; then
+    die "=> Direct commits to ${BRANCH} are not allowed. Please create a branch and submit a PR."
+fi
