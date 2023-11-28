@@ -24,7 +24,7 @@
     "tools"
   ],
   "engines": {
-    "vscode": "^1.76.0"
+    "vscode": "^1.84.0"
   },
   "categories": [
     "Programming Languages",
@@ -250,11 +250,11 @@
   "devDependencies": {
     "@types/node": "20.x",
     "@types/vscode": "^1.84.2",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "eslint": "^8.36.0",
-    "esbuild": "^0.17.12",
-    "typescript": "^5.3.2",
-    "@vscode/test-electron": "^2.3.0"
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.54.0",
+    "esbuild": "^0.19.8",
+    "typescript": "^5.3.2"
   }
 }
