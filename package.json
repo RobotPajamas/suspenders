@@ -242,9 +242,9 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run esbuild-base -- --minify",
+    "vscode:prepublish": "pnpm run esbuild-base --minify",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "pnpm run esbuild-base -- --sourcemap",
+    "build": "pnpm run esbuild-base --sourcemap",
     "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
     "eslint:fix": "eslint --ignore-path .gitignore . --fix",
     "format": "pnpm prettier:fix",
@@ -254,7 +254,7 @@
     "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
     "test": "pnpm run build && node ./dist/tests/runTest.js",
     "test-compile": "tsc -p ./",
-    "watch": "pnpm run esbuild-base -- --sourcemap --watch"
+    "watch": "pnpm run esbuild-base --sourcemap --watch"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
