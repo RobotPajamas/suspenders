@@ -266,7 +266,6 @@
     "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "pnpm run build && node ./dist/tests/runTest.js",
     "test:watch": "vitest",
     "watch": "pnpm run esbuild-base --sourcemap --watch"
   },
