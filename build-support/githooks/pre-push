@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -e
+
+# pre-push runs in the context of GIT_WORK_TREE, ie: pwd == REPO_ROOT
+source build-support/common.sh
+
+MERGE_BASE=$(git_merge_base)
+
+function has_unpushed_changes() {
+    local unpushed_changes=$(git diff --name-only ${MERGE_BASE} HEAD)
+
+    if [ -z "$unpushed_changes" ]; then
+        log "No unpushed changes. Skipping checks..."
+        return 1 # No unpushed changes
+    else
+        return 0 # Unpushed changes found
+    fi
+}
+
+function run_pnpm_checks() {
+    echo "*** There are unpushed changes. Running checks... ***"
+
+    echo "* Lockfile checking"
+    pnpm install --frozen-lockfile ||
+        die "=> 'pnpm install --frozen-lockfile' failed - please ensure you have run 'pnpm install' locally and your lockfile is up to date with package.json"
+
+    # echo "* Lint checking"
+    # pnpm lint ||
+    #     die "=> If there were lint errors, please fix them before trying to commit"
+
+    echo "* Running unit tests"
+    pnpm test ||
+        die "=> If there were test errors, please fix them before trying to commit"    
+}
+
+if has_unpushed_changes; then
+    run_pnpm_checks
+fi
