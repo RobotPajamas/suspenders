@@ -4,6 +4,7 @@ import { TargetsProvider, SourceRootsProvider } from "./treeviews";
 import { logger } from "./logging";
 import { CodeLensProvider } from "./codelens";
 import { TestsProvider } from "./test-explorer";
+import { getPantsExecutable } from "./configuration";
 
 // TODO: Destructure vscode imports
 
@@ -15,7 +16,7 @@ function runGoalOnAllTargets(name: string, cwd?: string): void {
   const options: proc.SpawnOptions = {
     cwd,
   };
-  const subprocess = proc.spawn("./pants", [name, "::"], options);
+  const subprocess = proc.spawn(getPantsExecutable(), [name, "::"], options);
   subprocess.stdout?.on("data", (data) => logger.log(data.toString()));
   subprocess.stderr?.on("data", (data) => logger.log(data.toString()));
 }
