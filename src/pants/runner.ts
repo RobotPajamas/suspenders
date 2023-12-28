@@ -9,7 +9,10 @@ export class Pants {
    *
    * @param buildRoot The root of the Pants build, which is the directory containing the pants.toml file.
    */
-  constructor(readonly buildRoot: string, readonly exe: string = getPantsExecutable()) { }
+  constructor(
+    readonly buildRoot: string,
+    readonly exe: string = getPantsExecutable()
+  ) {}
 
   /**
    * Run a Pants goal with any optional scoped options (e.g. global options or scoped goal options).
@@ -19,7 +22,7 @@ export class Pants {
    * @param scopedOptions A map of scoped options to run, which will be placed betwee the Pants executable and goals.
    * @returns
    */
-  async execute(goals: GoalArg[], target: string, scopedOptions?: Options): Promise<string> {
+  async execute(goals: GoalArg[], target?: string, scopedOptions?: Options): Promise<string> {
     // Ensure there is at least one goal
     if (goals.length === 0) {
       throw new Error("No goals specified");
@@ -33,7 +36,9 @@ export class Pants {
     for (const goal of goals) {
       args.push(...this.buildGoalArg(goal));
     }
-    args.push(target);
+    if (target) {
+      args.push(target);
+    }
 
     // Run the command and return the output
     const command = args.join(" ");

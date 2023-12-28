@@ -16,9 +16,9 @@ export type Goal = "check" | "fmt" | "lint" | "test" | "peek" | "dependencies" |
  * Which would result in the command line arguments:
  * ["--peek-exclude-defaults", "--check-only=mypy"]
  */
-export interface Options {
+export type Options = {
   [key: string]: string;
-}
+};
 
 /**
  * A goal and its unscoped options.
@@ -31,19 +31,28 @@ export interface Options {
  * Which would result in the command line arguments:
  * ["peek", "--exclude-defaults"]
  */
-export interface GoalArg {
+export type GoalArg = {
   goal: Goal;
   unscopedOptions?: Options;
-}
+};
 
+/**
+ * This PeekResult does not contain all the fields that Pants returns.
+ * It only contains the fields that are relevant to the extension.
+ */
 export type PeekResult = {
+  /**
+   * The address of the target. e.g. `src/python/project:lib`
+   */
   address: string;
+  /**
+   * The type of the target. e.g. `pex_binary`
+   */
   target_type: string;
-  dependencies: string[];
+  /**
+   * The goals that can be run on this target. e.g. `["package", "run"]`
+   */
   goals: string[];
-  source_raw: string;
-  sources: string[];
-  sources_fingerprint: string;
 };
 
 export async function list(runner: Pants, target: string): Promise<Address[]> {
@@ -57,19 +66,4 @@ export async function list(runner: Pants, target: string): Promise<Address[]> {
   const result = await runner.execute([goalArgs], target, unscopedOptions);
   const specs = result.split("\n");
   return specs.map((spec) => Address.parse(spec));
-}
-
-export async function peek(runner: Pants, target: string): Promise<PeekResult[]> {
-  const goalArgs: GoalArg = {
-    goal: "peek",
-    unscopedOptions: {
-      "exclude-defaults": "",
-    },
-  };
-  const unscopedOptions: Options = {
-    "filter-granularity": "BUILD",
-  };
-
-  const result = await runner.execute([goalArgs], target, unscopedOptions);
-  return JSON.parse(result);
 }
