@@ -1,6 +1,6 @@
 import { WorkspaceConfiguration, workspace } from "vscode";
 
-const namespace = "suspenders";
+export const namespace = "suspenders";
 
 /**
  * Returns the path to the Pants executable, as configured in the user's settings.
