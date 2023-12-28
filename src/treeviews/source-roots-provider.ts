@@ -1,5 +1,6 @@
 import { EventEmitter, TreeDataProvider, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { Pants } from "../pants";
+import { SourceRoot } from "./tree-item";
 
 /**
  * A TreeDataProvider that provides a list of source roots in the workspace.
@@ -19,7 +20,6 @@ export class SourceRootsProvider implements TreeDataProvider<SourceRoot> {
    * The constructor for the SourceRootsProvider.
    *
    * @param rootPath The path to the workspace root.
-   * @param blah A dummy parameter to test the tree view.
    */
   constructor(private rootPath?: string) {
     // TODO: Should we throw if there is no rootpath?
@@ -33,7 +33,7 @@ export class SourceRootsProvider implements TreeDataProvider<SourceRoot> {
     this._onDidChangeTreeData.fire();
   }
 
-  getTreeItem(element: SourceRoot): TreeItem | Thenable<TreeItem> {
+  getTreeItem(element: SourceRoot): TreeItem | Promise<TreeItem> {
     return element;
   }
 
@@ -50,16 +50,6 @@ export class SourceRootsProvider implements TreeDataProvider<SourceRoot> {
 
     const roots = await listSourceRoots(this.runner);
     return roots.map((r) => new SourceRoot(r));
-  }
-}
-
-/**
- * A tree item that represents a Pants source root.
- * https://www.pantsbuild.org/docs/source-roots
- */
-export class SourceRoot extends TreeItem {
-  constructor(label: string) {
-    super(label, TreeItemCollapsibleState.None);
   }
 }
 

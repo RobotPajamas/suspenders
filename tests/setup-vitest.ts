@@ -24,6 +24,10 @@ vi.mock("vscode", () => {
       Expanded: 2,
     },
     TreeItem: class {},
+    ThemeIcon: class {},
+    Uri: {
+      file: vi.fn(),
+    },
     workspace: {
       getConfiguration: () => {
         return {
