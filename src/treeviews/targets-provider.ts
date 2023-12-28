@@ -76,12 +76,7 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
   }
 
   /**
-   * Creates a node in the tree.
-   *
-   * @param path
-   * @param name
-   * @param targets
-   * @returns
+   * TODO: Come back to this
    */
   createNode(path: string, name: string, targets: ReadonlyMap<string, Target[]>): PeekTree {
     return {
@@ -92,6 +87,9 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
     };
   }
 
+  /**
+   * TODO: Come back to this
+   */
   attachNodeToTree(trunk: PeekTree, node: string, newNode: PeekTree): PeekTree {
     if (!trunk.children.has(node)) {
       trunk.children.set(node, newNode);
@@ -101,6 +99,7 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
 
   /**
    * Builds a tree-like structure out of the given path/subpath and attaches it to the given trunk.
+   * TODO: Come back to this
    */
   attach(
     path: string,
@@ -176,13 +175,3 @@ export function createTargetMap(targets: Target[]): Map<string, Target[]> {
     return map.set(path, [...(map.get(path) || []), target]);
   }, new Map<string, Target[]>());
 }
-
-// const targets = new Map<string, Target[]>();
-// for (const target of targets) {
-//   const path = target.address.path;
-//   if (targets.has(path)) {
-//     targets.get(path)?.push(target);
-//   } else {
-//     targets.set(path, [target]);
-//   }
-// }

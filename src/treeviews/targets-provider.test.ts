@@ -6,7 +6,7 @@ import {
   mapPeekResultsToTargets,
   peek,
 } from "./targets-provider";
-import { Target } from "./tree-item";
+import { FolderTreeItem, Target, TargetTreeItem } from "./tree-item";
 
 vi.mock("child_process");
 
@@ -32,49 +32,12 @@ test("peek should return a list of PeekResults if Pants returns targets", async 
 
 test("mapPeekResultsToTargets should map the incoming peek results to Targets", () => {
   expect(mapPeekResultsToTargets([])).toEqual([]);
-  expect(mapPeekResultsToTargets(samplePeekResults)).toEqual([
-    {
-      address: new Address("examples/python/helloworld", "helloworld-pex"),
-      type: "pex_binary",
-    },
-    {
-      address: new Address("examples/python/helloworld", "libhelloworld"),
-      type: "python_sources",
-    },
-  ]);
+  expect(mapPeekResultsToTargets(samplePeekResults)).toEqual(sampleTargets);
 });
 
 test("createTargetMap should create a map of targets keyed by their path", () => {
   expect(createTargetMap([])).toEqual(new Map<string, Target[]>());
-
-  expect(
-    createTargetMap([
-      {
-        address: new Address("examples/python/helloworld", "helloworld-pex"),
-        type: "pex_binary",
-      },
-      {
-        address: new Address("examples/python/helloworld", "libhelloworld"),
-        type: "python_sources",
-      },
-    ])
-  ).toEqual(
-    new Map<string, Target[]>([
-      [
-        "examples/python/helloworld",
-        [
-          {
-            address: new Address("examples/python/helloworld", "helloworld-pex"),
-            type: "pex_binary",
-          },
-          {
-            address: new Address("examples/python/helloworld", "libhelloworld"),
-            type: "python_sources",
-          },
-        ],
-      ],
-    ])
-  );
+  expect(createTargetMap(sampleTargets)).toEqual(sampleTargetMap);
 });
 
 test("refresh should fire the onDidChangeTreeData event", () => {
@@ -102,7 +65,13 @@ test("getChildren should return an empty list if Pants does not return any peeke
   expect(await provider.getChildren()).toEqual([]);
 });
 
-// test("getChildren should return a list of peeked targets if Pants returns peeked targets", async () => {
+test("getChildren should return a list of PantsTreeItems if Pants returns peeked targets", async () => {
+  vi.mocked(execSync).mockReturnValue(samplePeekStdOut);
+
+  const provider = new TargetsProvider("any/path/to/workspace");
+  const children = await provider.getChildren();
+  expect(JSON.stringify(children)).toEqual(JSON.stringify(expectedSimplifiedPantsTreeItems));
+});
 
 const samplePeekStdOut = `[
     {
@@ -145,5 +114,54 @@ const samplePeekResults: PeekResult[] = [
     address: "examples/python/helloworld:libhelloworld",
     target_type: "python_sources",
     goals: [],
+  },
+];
+
+const sampleTargets: Target[] = [
+  {
+    address: new Address("examples/python/helloworld", "helloworld-pex"),
+    type: "pex_binary",
+  },
+  {
+    address: new Address("examples/python/helloworld", "libhelloworld"),
+    type: "python_sources",
+  },
+];
+
+const sampleTargetMap = new Map<string, Target[]>([
+  [
+    "examples/python/helloworld",
+    [
+      {
+        address: new Address("examples/python/helloworld", "helloworld-pex"),
+        type: "pex_binary",
+      },
+      {
+        address: new Address("examples/python/helloworld", "libhelloworld"),
+        type: "python_sources",
+      },
+    ],
+  ],
+]);
+
+const expectedSimplifiedPantsTreeItems = [
+  {
+    subtree: {
+      id: "examples/python/helloworld",
+      name: "examples",
+      targets: [
+        {
+          address: { path: "examples/python/helloworld", targetName: "helloworld-pex" },
+          type: "pex_binary",
+        },
+        {
+          address: { path: "examples/python/helloworld", targetName: "libhelloworld" },
+          type: "python_sources",
+        },
+      ],
+      children: {},
+    },
+    buildRoot: "any/path/to/workspace",
+    iconPath: {},
   },
 ];
