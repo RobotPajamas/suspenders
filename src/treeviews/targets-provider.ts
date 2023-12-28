@@ -50,23 +50,9 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
 
     // This is the root node, so we need to enumerate the folders in the workspace.
     // Peek the whole workspace, and create a tree-like structure out of the results.
-    // TODO: Clean this all up - it's a mess.
     const peekResults = await peek(this.runner, "::");
-
-    // Create a map of targets to their paths
-    const targets = new Map<string, Target[]>();
-    for (const result of peekResults) {
-      const target: Target = {
-        address: Address.parse(result.address),
-        type: result.target_type,
-      };
-      const path = target.address.path;
-      if (targets.has(path)) {
-        targets.get(path)?.push(target);
-      } else {
-        targets.set(path, [target]);
-      }
-    }
+    const targets = mapPeekResultsToTargets(peekResults);
+    const targetMap = createTargetMap(targets);
 
     const rootTree: PeekTree = {
       id: path.basename(this.rootPath),
@@ -75,19 +61,48 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       children: new Map(),
     };
 
-    for (const path of targets.keys()) {
+    // Attach the targets to the root tree (except for the root folder)
+    for (const path of targetMap.keys()) {
       if (path === "") {
         continue;
       }
-      this.attach(path, path, rootTree, targets);
+      this.attach(path, path, rootTree, targetMap);
     }
 
+    // Re-map the PeekTree to a list of FolderTreeItems for rendering
     return Array.from(rootTree.children.values()).map(
       (c) => new FolderTreeItem(c, this.runner.buildRoot)
     );
   }
 
-  private attach(
+  /**
+   * Creates a node in the tree.
+   * 
+   * @param path 
+   * @param name 
+   * @param targets 
+   * @returns 
+   */
+  createNode(path: string, name: string, targets: ReadonlyMap<string, Target[]>): PeekTree {
+    return {
+      id: path,
+      name: name,
+      targets: targets.get(path) ?? [],
+      children: new Map(),
+    };
+  }
+
+  attachNodeToTree(trunk: PeekTree, node: string, newNode: PeekTree): PeekTree {
+    if (!trunk.children.has(node)) {
+      trunk.children.set(node, newNode);
+    }
+    return trunk.children.get(node) as PeekTree;
+  }
+
+  /**
+   * Builds a tree-like structure out of the given path/subpath and attaches it to the given trunk.
+   */
+  attach(
     path: string,
     subPath: string,
     trunk: PeekTree,
@@ -96,28 +111,19 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
     const parts = subPath.split("/");
     if (parts.length === 1) {
       // This is the terminal folder
-      trunk.children.set(parts[0], {
-        id: path,
-        name: parts[0],
-        targets: targets.get(path) ?? [],
-        children: new Map(),
-      });
-    } else {
+      trunk.children.set(parts[0], this.createNode(path, parts[0], targets));
+      return;
+    } 
+
+      // This is a subfolder
       const node = parts.shift();
       if (!node) {
         return;
       }
       const others = parts.join("/");
-      if (!trunk.children.has(node)) {
-        trunk.children.set(node, {
-          id: path,
-          name: node,
-          targets: targets.get(path) ?? [],
-          children: new Map(),
-        });
-      }
-      this.attach(path, others, trunk.children.get(node) as PeekTree, targets);
-    }
+      const newNode = this.createNode(path, node, targets);
+      const childNode = this.attachNodeToTree(trunk, node, newNode);
+      this.attach(path, others, childNode, targets);    
   }
 }
 
@@ -142,3 +148,41 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
   const result = await runner.execute([goalArgs], target, unscopedOptions);
   return result == "" ? [] : JSON.parse(result);
 }
+
+/**
+ * Map the list of PeekResults to a list of Targets.
+ * 
+ * @param peekResults A list of {@link PeekResult}.
+ * @returns A list of {@link Target}.
+ */
+export function mapPeekResultsToTargets(peekResults: PeekResult[]): Target[] {
+  return peekResults.map((result) => {
+    return {
+      address: Address.parse(result.address),
+      type: result.target_type,
+    };
+  });
+}
+
+/**
+ * Create a map of targets keyed by their path.
+ * 
+ * @param targets A list of {@link Target}.
+ * @returns A map of targets keyed by their path.
+ */
+export function createTargetMap(targets: Target[]): Map<string, Target[]> {
+  return targets.reduce((map, target) => {
+    const path = target.address.path;
+    return map.set(path, [...(map.get(path) || []), target]);
+  },  new Map<string, Target[]>());
+}
+
+// const targets = new Map<string, Target[]>();
+// for (const target of targets) {
+//   const path = target.address.path;
+//   if (targets.has(path)) {
+//     targets.get(path)?.push(target);
+//   } else {
+//     targets.set(path, [target]);
+//   }
+// }

@@ -18,12 +18,12 @@ export class SourceRoot extends TreeItem {
   }
 }
 
-export interface Target {
+export type Target = {
   address: Address;
   type: string;
 }
 
-export interface PeekTree {
+export type PeekTree = {
   id: string;
   name: string;
   targets: Target[];
