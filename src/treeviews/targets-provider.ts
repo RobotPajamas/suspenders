@@ -77,11 +77,11 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
 
   /**
    * Creates a node in the tree.
-   * 
-   * @param path 
-   * @param name 
-   * @param targets 
-   * @returns 
+   *
+   * @param path
+   * @param name
+   * @param targets
+   * @returns
    */
   createNode(path: string, name: string, targets: ReadonlyMap<string, Target[]>): PeekTree {
     return {
@@ -113,17 +113,17 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       // This is the terminal folder
       trunk.children.set(parts[0], this.createNode(path, parts[0], targets));
       return;
-    } 
+    }
 
-      // This is a subfolder
-      const node = parts.shift();
-      if (!node) {
-        return;
-      }
-      const others = parts.join("/");
-      const newNode = this.createNode(path, node, targets);
-      const childNode = this.attachNodeToTree(trunk, node, newNode);
-      this.attach(path, others, childNode, targets);    
+    // This is a subfolder
+    const node = parts.shift();
+    if (!node) {
+      return;
+    }
+    const others = parts.join("/");
+    const newNode = this.createNode(path, node, targets);
+    const childNode = this.attachNodeToTree(trunk, node, newNode);
+    this.attach(path, others, childNode, targets);
   }
 }
 
@@ -151,7 +151,7 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
 
 /**
  * Map the list of PeekResults to a list of Targets.
- * 
+ *
  * @param peekResults A list of {@link PeekResult}.
  * @returns A list of {@link Target}.
  */
@@ -166,7 +166,7 @@ export function mapPeekResultsToTargets(peekResults: PeekResult[]): Target[] {
 
 /**
  * Create a map of targets keyed by their path.
- * 
+ *
  * @param targets A list of {@link Target}.
  * @returns A map of targets keyed by their path.
  */
@@ -174,7 +174,7 @@ export function createTargetMap(targets: Target[]): Map<string, Target[]> {
   return targets.reduce((map, target) => {
     const path = target.address.path;
     return map.set(path, [...(map.get(path) || []), target]);
-  },  new Map<string, Target[]>());
+  }, new Map<string, Target[]>());
 }
 
 // const targets = new Map<string, Target[]>();

@@ -21,14 +21,14 @@ export class SourceRoot extends TreeItem {
 export type Target = {
   address: Address;
   type: string;
-}
+};
 
 export type PeekTree = {
   id: string;
   name: string;
   targets: Target[];
   children: Map<string, PeekTree>;
-}
+};
 
 export interface PantsTreeItem extends TreeItem {
   canHaveChildren(): boolean;

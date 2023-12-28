@@ -18,7 +18,7 @@ export type Goal = "check" | "fmt" | "lint" | "test" | "peek" | "dependencies" |
  */
 export type Options = {
   [key: string]: string;
-}
+};
 
 /**
  * A goal and its unscoped options.
@@ -34,7 +34,7 @@ export type Options = {
 export type GoalArg = {
   goal: Goal;
   unscopedOptions?: Options;
-}
+};
 
 /**
  * This PeekResult does not contain all the fields that Pants returns.
@@ -48,7 +48,7 @@ export type PeekResult = {
   /**
    * The type of the target. e.g. `pex_binary`
    */
-  target_type: string; 
+  target_type: string;
   /**
    * The goals that can be run on this target. e.g. `["package", "run"]`
    */
