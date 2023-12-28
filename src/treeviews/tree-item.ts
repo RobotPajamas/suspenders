@@ -35,6 +35,9 @@ export interface PantsTreeItem extends TreeItem {
   getChildren(): Promise<PantsTreeItem[]>;
 }
 
+/**
+ * A tree item that represents a folder in the workspace.
+ */
 export class FolderTreeItem extends TreeItem implements PantsTreeItem {
   /**
    * Takes in a path to a folder, and a Pants runner.
@@ -51,6 +54,11 @@ export class FolderTreeItem extends TreeItem implements PantsTreeItem {
     this.iconPath = new ThemeIcon("folder");
   }
 
+  /**
+   * Folders can have children, so this always returns true.
+   *
+   * @returns true, since folders can have children.
+   */
   canHaveChildren(): boolean {
     return true;
   }
@@ -69,7 +77,17 @@ export class FolderTreeItem extends TreeItem implements PantsTreeItem {
   }
 }
 
+/**
+ * A tree item that represents a Pants target.
+ */
 export class TargetTreeItem extends TreeItem implements PantsTreeItem {
+  /**
+   * Takes in a Pants target, and a path to the build root.
+   * The label is the target name, and the icon is based on the target type.
+   *
+   * @param target The Pants target.
+   * @param buildRoot The path to the build root.
+   */
   constructor(target: Target, buildRoot: string) {
     const label = `${target.address.targetName} (${target.type})`;
     super(label, TreeItemCollapsibleState.None);
@@ -82,10 +100,21 @@ export class TargetTreeItem extends TreeItem implements PantsTreeItem {
     };
   }
 
+  /**
+   * Targets cannot have children, so this always returns false.
+   *
+   * @returns false, since targets cannot have children.
+   */
   public canHaveChildren(): boolean {
     return false;
   }
 
+  /**
+   * This is the method that is called when the user expands a tree item containing a Target.
+   * It should return an empty list, since targets cannot have children.
+   *
+   * @returns An empty list, since targets cannot have children.
+   */
   public async getChildren(): Promise<PantsTreeItem[]> {
     return [];
   }
