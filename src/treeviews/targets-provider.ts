@@ -1,10 +1,9 @@
 import { EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import * as path from "path";
 import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
-import { list, peek, PeekResult, Address, Pants } from "../pants";
+import { PeekResult, Address, Pants, GoalArg, Options } from "../pants";
 
 export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
-  
   private runner: Pants;
 
   private _onDidChangeTreeData = new EventEmitter<PantsTreeItem | undefined | void>();
@@ -120,4 +119,26 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       this.attach(path, others, trunk.children.get(node) as PeekTree, targets);
     }
   }
+}
+
+/**
+ * Run the pants command which enumerates the targets in the workspace.
+ *
+ * @param runner The Pants runner instance used to discover the targets.
+ * @returns A list of {@link PeekResult} or an empty list if there are no targets.
+ */
+export async function peek(runner: Pants, target: string): Promise<PeekResult[]> {
+  const goalArgs: GoalArg = {
+    goal: "peek",
+    unscopedOptions: {
+      "exclude-defaults": "",
+      // "include-goals": "",
+    },
+  };
+  const unscopedOptions: Options = {
+    "filter-granularity": "BUILD",
+  };
+
+  const result = await runner.execute([goalArgs], target, unscopedOptions);
+  return result == "" ? [] : JSON.parse(result);
 }

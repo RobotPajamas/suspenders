@@ -1,4 +1,4 @@
-import {TreeItem, TreeItemCollapsibleState, ThemeIcon, Uri} from "vscode";
+import { TreeItem, TreeItemCollapsibleState, ThemeIcon, Uri } from "vscode";
 import * as path from "path";
 import { Address } from "../pants/address";
 import { Pants } from "../pants/runner";

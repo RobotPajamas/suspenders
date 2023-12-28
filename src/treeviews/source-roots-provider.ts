@@ -2,7 +2,6 @@ import { EventEmitter, TreeDataProvider, TreeItem, TreeItemCollapsibleState } fr
 import { Pants } from "../pants";
 import { SourceRoot } from "./tree-item";
 
-
 /**
  * A TreeDataProvider that provides a list of source roots in the workspace.
  * The source roots are discovered by running `pants roots` in the workspace root.
