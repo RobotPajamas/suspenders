@@ -1,32 +1,45 @@
-import * as vscode from "vscode";
+import { EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import * as path from "path";
 import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
 import { list, peek, PeekResult, Address, Pants } from "../pants";
 
-export class TargetsProvider implements vscode.TreeDataProvider<PantsTreeItem> {
+export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
+  
   private runner: Pants;
 
-  private _onDidChangeTreeData: vscode.EventEmitter<PantsTreeItem | undefined | void> =
-    new vscode.EventEmitter<PantsTreeItem | undefined | void>();
-  readonly onDidChangeTreeData: vscode.Event<PantsTreeItem | undefined | void> =
-    this._onDidChangeTreeData.event;
+  private _onDidChangeTreeData = new EventEmitter<PantsTreeItem | undefined | void>();
+  readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
-  constructor(private rootPath: string | undefined) {
+  /**
+   * The constructor for the TargetsProvider.
+   *
+   * @param rootPath The path to the workspace root.
+   */
+  constructor(private rootPath?: string) {
     // TODO: Should we throw if there is no rootpath?
     this.runner = new Pants(rootPath ?? "");
   }
 
+  /**
+   * Refresh the tree view.
+   */
   public refresh(): void {
     this._onDidChangeTreeData.fire();
   }
 
-  public getTreeItem(element: PantsTreeItem): vscode.TreeItem | Promise<vscode.TreeItem> {
+  public getTreeItem(element: PantsTreeItem): TreeItem | Promise<TreeItem> {
     return element;
   }
 
-  public async getChildren(element?: PantsTreeItem | undefined): Promise<PantsTreeItem[]> {
+  /**
+   * Get the children of the given element, or the root elements if no element is provided.
+   * If an element is provided, it will defer to the element's getChildren method.
+   *
+   * @param element The optional element to get the children of.
+   * @returns A list of {@link SourceRoot}.
+   */
+  public async getChildren(element?: PantsTreeItem): Promise<PantsTreeItem[]> {
     if (!this.rootPath) {
-      vscode.window.showInformationMessage("No pants.toml in empty workspace");
       return [];
     }
 

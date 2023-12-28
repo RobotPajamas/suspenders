@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import {TreeItem, TreeItemCollapsibleState, ThemeIcon, Uri} from "vscode";
 import * as path from "path";
 import { Address } from "../pants/address";
 import { Pants } from "../pants/runner";
@@ -7,6 +7,16 @@ import { Pants } from "../pants/runner";
 // The leaf nodes are the TargetTreeItems, which are the actual targets.
 // The intermediate nodes are the FolderTreeItems, which are the folders that may contain BUILD files.
 // The root node is a FolderTreeItem, which is the root of the workspace.
+
+/**
+ * A tree item that represents a Pants source root.
+ * https://www.pantsbuild.org/docs/source-roots
+ */
+export class SourceRoot extends TreeItem {
+  constructor(label: string) {
+    super(label, TreeItemCollapsibleState.None);
+  }
+}
 
 export interface Target {
   address: Address;
@@ -20,12 +30,12 @@ export interface PeekTree {
   children: Map<string, PeekTree>;
 }
 
-export interface PantsTreeItem extends vscode.TreeItem {
+export interface PantsTreeItem extends TreeItem {
   canHaveChildren(): boolean;
   getChildren(): Promise<PantsTreeItem[]>;
 }
 
-export class FolderTreeItem extends vscode.TreeItem implements PantsTreeItem {
+export class FolderTreeItem extends TreeItem implements PantsTreeItem {
   /**
    * Takes in a path to a folder, and a Pants runner.
    * Strips the first part of the path as its label, and passes the rest to the next FolderTreeItem.
@@ -37,8 +47,8 @@ export class FolderTreeItem extends vscode.TreeItem implements PantsTreeItem {
     readonly subtree: PeekTree,
     readonly buildRoot: string
   ) {
-    super(subtree.name, vscode.TreeItemCollapsibleState.Collapsed);
-    this.iconPath = new vscode.ThemeIcon("folder");
+    super(subtree.name, TreeItemCollapsibleState.Collapsed);
+    this.iconPath = new ThemeIcon("folder");
   }
 
   canHaveChildren(): boolean {
@@ -59,16 +69,16 @@ export class FolderTreeItem extends vscode.TreeItem implements PantsTreeItem {
   }
 }
 
-export class TargetTreeItem extends vscode.TreeItem implements PantsTreeItem {
+export class TargetTreeItem extends TreeItem implements PantsTreeItem {
   constructor(target: Target, buildRoot: string) {
     const label = `${target.address.targetName} (${target.type})`;
-    super(label, vscode.TreeItemCollapsibleState.None);
+    super(label, TreeItemCollapsibleState.None);
     this.iconPath = this.getIcon(target.type);
     this.contextValue = "deploy package publish run test"; // TODO: Pipe goals from peek into this
     this.command = {
       command: "vscode.open",
       title: "Open this BUILD file",
-      arguments: [vscode.Uri.file(path.join(buildRoot, target.address.path, "BUILD.pants"))],
+      arguments: [Uri.file(path.join(buildRoot, target.address.path, "BUILD.pants"))],
     };
   }
 
@@ -82,19 +92,19 @@ export class TargetTreeItem extends vscode.TreeItem implements PantsTreeItem {
 
   // Colours don't seem to work for some reason? Haven't found a working attempt yet.
   // Other than custom SVGs coloured appropriately
-  private getIcon(type: string): vscode.ThemeIcon {
+  private getIcon(type: string): ThemeIcon {
     if (type.endsWith("library")) {
-      return new vscode.ThemeIcon("library", "list.activeSelectionBackground");
+      return new ThemeIcon("library", "list.activeSelectionBackground");
     } else if (type.endsWith("distribution")) {
-      return new vscode.ThemeIcon("archive", "blue");
+      return new ThemeIcon("archive", "blue");
     } else if (type.endsWith("binary")) {
-      return new vscode.ThemeIcon("package", "#ff00bb");
+      return new ThemeIcon("package", "#ff00bb");
     } else if (type.endsWith("test")) {
-      return new vscode.ThemeIcon("beaker", "#ff00bb");
+      return new ThemeIcon("beaker", "#ff00bb");
     } else if (type.endsWith("sources")) {
-      return new vscode.ThemeIcon("code", "#ff00bb");
+      return new ThemeIcon("code", "#ff00bb");
     } else {
-      return new vscode.ThemeIcon("file");
+      return new ThemeIcon("file");
     }
   }
 }

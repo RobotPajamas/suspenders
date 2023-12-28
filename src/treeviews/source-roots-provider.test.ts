@@ -1,5 +1,6 @@
 import { Pants } from "../pants";
-import { SourceRoot, SourceRootsProvider, listSourceRoots } from "./source-roots-provider";
+import { SourceRootsProvider, listSourceRoots } from "./source-roots-provider";
+import { SourceRoot } from "./tree-item";
 import { execSync } from "child_process";
 
 vi.mock("child_process");
@@ -32,13 +33,13 @@ test("refresh should fire the onDidChangeTreeData event", () => {
   expect(eventFired).toBe(true);
 });
 
-test("getChildren should return an empty list if there is no rootPath", async () => {
-  const provider = new SourceRootsProvider();
-  expect(await provider.getChildren()).toEqual([]);
+    test("getChildren should return an empty list if there is no rootPath", async () => {
+    const provider = new SourceRootsProvider();
+    expect(await provider.getChildren()).toEqual([]);
 
-  const provider1 = new SourceRootsProvider("");
-  expect(await provider1.getChildren()).toEqual([]);
-});
+    const provider1 = new SourceRootsProvider("");
+    expect(await provider1.getChildren()).toEqual([]);
+    });
 
 test("getChildren should return an empty list if Pants does not return any source roots", async () => {
   const stdout = "";
