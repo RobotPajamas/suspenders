@@ -22,7 +22,7 @@ function runGoalOnAllTargets(name: string, cwd?: string): void {
 }
 
 const extensionName = "robotpajamas.vscode-suspenders";
-const extensionVersion = "0.0.1";
+const extensionVersion = "0.0.2";
 
 export function activate(context: vscode.ExtensionContext) {
   logger.info(`Extension name: ${extensionName}`);
