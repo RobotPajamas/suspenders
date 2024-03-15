@@ -3,7 +3,7 @@ import { WorkspaceConfiguration, workspace } from "vscode";
 export const namespace = "suspenders";
 
 function returnDefaultIfUndefined(value: any, defaultValue: any) {
-  if (!value) {
+  if (value === undefined) {
     return defaultValue;
   }
   return value;
@@ -19,7 +19,7 @@ function returnDefaultIfUndefined(value: any, defaultValue: any) {
 export function getPantsExecutable(
   config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
 ): string {
-  return returnDefaultIfUndefined(config.get<string>("executable"), "pants");
+  return returnDefaultIfUndefined(config.get<string>("executable"), "pants").trim();
 }
 
 export function ignoreLockfiles(
@@ -31,5 +31,5 @@ export function ignoreLockfiles(
 export function getBuildFileExtension(
   config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
 ): string {
-  return returnDefaultIfUndefined(config.get<string>("buildFileExtension"), "");
+  return returnDefaultIfUndefined(config.get<string>("buildFileExtension"), "").trim();
 }

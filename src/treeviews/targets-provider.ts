@@ -59,18 +59,23 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
 
     const rootTree: PeekTree = {
       id: path.basename(this.rootPath),
-      name: "/",
+      name: "root",
       targets: [],
       children: new Map(),
     };
 
     // Attach the targets to the root tree
     for (const path of targetMap.keys()) {
+      if (path === "") {
+        continue;
+      }
+      
       if (path === "//") {
         targetMap.get(path)?.forEach((target) => {
           rootTree.targets.push(target);
         });
       }
+
       this.attach(path, path, rootTree, targetMap);
     }
 
@@ -149,7 +154,7 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
       // "include-goals": "",
     },
   };
-  let unscopedOptions: Options = {
+  const unscopedOptions: Options = {
     "filter-granularity": "BUILD",
   };
   if (ignoreLockfiles()) {
@@ -184,7 +189,6 @@ export function mapPeekResultsToTargets(peekResults: PeekResult[]): Target[] {
 export function createTargetMap(targets: Target[]): Map<string, Target[]> {
   return targets.reduce((map, target) => {
     const path = target.address.path;
-    const value = [...(map.get(path) || []), target];
-    return map.set(path, value);
+    return map.set(path, [...(map.get(path) || []), target]);
   }, new Map<string, Target[]>());
 }
