@@ -1,6 +1,6 @@
 import { EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import * as path from "path";
-import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
+import { FolderTreeItem, PantsTreeItem, PeekTree, Target, TargetTreeItem } from "./tree-item";
 import { PeekResult, Address, Pants, GoalArg, Options } from "../pants";
 import { ignoreLockfiles } from "../configuration";
 
@@ -55,6 +55,8 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
     const targets = mapPeekResultsToTargets(peekResults);
     const targetMap = createTargetMap(targets);
 
+    console.log(JSON.stringify(targetMap));
+
     const rootTree: PeekTree = {
       id: path.basename(this.rootPath),
       name: "/",
@@ -67,13 +69,19 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       if (path === "//") {
         targetMap.get(path)?.forEach((target) => {
           rootTree.targets.push(target);
-        })
+        });
       }
       this.attach(path, path, rootTree, targetMap);
     }
 
-    // Let's just return the whole root and let the UI take it from there.
-    return [new FolderTreeItem(rootTree, this.runner.buildRoot)]
+    let children: PantsTreeItem[] = [];
+    for (const target of rootTree.targets) {
+      children.push(new TargetTreeItem(target, this.runner.buildRoot));
+    }
+    for (const child of rootTree.children.values()) {
+      children.push(new FolderTreeItem(child, this.runner.buildRoot));
+    }
+    return children;
   }
 
   /**
@@ -145,8 +153,8 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
     "filter-granularity": "BUILD",
   };
   if (ignoreLockfiles()) {
-    unscopedOptions["filter-target-type"] = "-_lockfiles"
-  };
+    unscopedOptions["filter-target-type"] = "-_lockfiles";
+  }
 
   const result = await runner.execute([goalArgs], target, unscopedOptions);
   return result == "" ? [] : JSON.parse(result);
@@ -176,7 +184,7 @@ export function mapPeekResultsToTargets(peekResults: PeekResult[]): Target[] {
 export function createTargetMap(targets: Target[]): Map<string, Target[]> {
   return targets.reduce((map, target) => {
     const path = target.address.path;
-    const value = [...(map.get(path) || []), target]
+    const value = [...(map.get(path) || []), target];
     return map.set(path, value);
   }, new Map<string, Target[]>());
 }

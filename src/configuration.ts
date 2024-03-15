@@ -2,11 +2,11 @@ import { WorkspaceConfiguration, workspace } from "vscode";
 
 export const namespace = "suspenders";
 
-function returnDefaultIfUndefined(value: any, defaultValue: any ) {
+function returnDefaultIfUndefined(value: any, defaultValue: any) {
   if (!value) {
-    return defaultValue
+    return defaultValue;
   }
-  return value
+  return value;
 }
 
 /**
@@ -19,7 +19,7 @@ function returnDefaultIfUndefined(value: any, defaultValue: any ) {
 export function getPantsExecutable(
   config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
 ): string {
-  return returnDefaultIfUndefined(config.get<string>("executable"), "pants")
+  return returnDefaultIfUndefined(config.get<string>("executable"), "pants");
 }
 
 export function ignoreLockfiles(

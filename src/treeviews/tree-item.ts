@@ -96,7 +96,9 @@ export class TargetTreeItem extends TreeItem implements PantsTreeItem {
     this.command = {
       command: "vscode.open",
       title: "Open this BUILD file",
-      arguments: [Uri.file(path.join(buildRoot, target.address.path, `BUILD${getBuildFileExtension()}`))],
+      arguments: [
+        Uri.file(path.join(buildRoot, target.address.path, `BUILD${getBuildFileExtension()}`)),
+      ],
     };
   }
 
