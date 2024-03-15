@@ -2,6 +2,7 @@ import { EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import * as path from "path";
 import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
 import { PeekResult, Address, Pants, GoalArg, Options } from "../pants";
+import { ignoreLockfiles } from "../configuration";
 
 export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
   private runner: Pants;
@@ -56,23 +57,23 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
 
     const rootTree: PeekTree = {
       id: path.basename(this.rootPath),
-      name: "root",
+      name: "/",
       targets: [],
       children: new Map(),
     };
 
-    // Attach the targets to the root tree (except for the root folder)
+    // Attach the targets to the root tree
     for (const path of targetMap.keys()) {
-      if (path === "") {
-        continue;
+      if (path === "//") {
+        targetMap.get(path)?.forEach((target) => {
+          rootTree.targets.push(target);
+        })
       }
       this.attach(path, path, rootTree, targetMap);
     }
 
-    // Re-map the PeekTree to a list of FolderTreeItems for rendering
-    return Array.from(rootTree.children.values()).map(
-      (c) => new FolderTreeItem(c, this.runner.buildRoot)
-    );
+    // Let's just return the whole root and let the UI take it from there.
+    return [new FolderTreeItem(rootTree, this.runner.buildRoot)]
   }
 
   /**
@@ -140,8 +141,11 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
       // "include-goals": "",
     },
   };
-  const unscopedOptions: Options = {
+  let unscopedOptions: Options = {
     "filter-granularity": "BUILD",
+  };
+  if (ignoreLockfiles()) {
+    unscopedOptions["filter-target-type"] = "-_lockfiles"
   };
 
   const result = await runner.execute([goalArgs], target, unscopedOptions);
@@ -172,6 +176,7 @@ export function mapPeekResultsToTargets(peekResults: PeekResult[]): Target[] {
 export function createTargetMap(targets: Target[]): Map<string, Target[]> {
   return targets.reduce((map, target) => {
     const path = target.address.path;
-    return map.set(path, [...(map.get(path) || []), target]);
+    const value = [...(map.get(path) || []), target]
+    return map.set(path, value);
   }, new Map<string, Target[]>());
 }

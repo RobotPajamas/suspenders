@@ -1,7 +1,7 @@
 import { TreeItem, TreeItemCollapsibleState, ThemeIcon, Uri } from "vscode";
 import * as path from "path";
 import { Address } from "../pants/address";
-import { Pants } from "../pants/runner";
+import { getBuildFileExtension } from "../configuration";
 
 // The TargetProvider can have several types of tree items.
 // The leaf nodes are the TargetTreeItems, which are the actual targets.
@@ -96,7 +96,7 @@ export class TargetTreeItem extends TreeItem implements PantsTreeItem {
     this.command = {
       command: "vscode.open",
       title: "Open this BUILD file",
-      arguments: [Uri.file(path.join(buildRoot, target.address.path, "BUILD.pants"))],
+      arguments: [Uri.file(path.join(buildRoot, target.address.path, `BUILD${getBuildFileExtension()}`))],
     };
   }
 

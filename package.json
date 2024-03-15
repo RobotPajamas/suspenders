@@ -2,7 +2,7 @@
   "name": "vscode-suspenders",
   "displayName": "Suspenders",
   "description": "PantsBuild support for VS Code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "robotpajamas",
   "preview": true,
   "private": true,
@@ -113,6 +113,20 @@
           "type": "string",
           "default": "pants",
           "order": 0,
+          "scope": "machine-overridable"
+        },
+        "suspenders.ignoreLockfiles": {
+          "description": "Ignore Lockfiles in Targets Tree",
+          "type": "boolean",
+          "default": true,
+          "order": 1,
+          "scope": "machine-overridable"
+        },
+        "suspenders.buildFileExtension": {
+          "description": "Extension used for BUILD files. Usefull when wanting to differentiate between a BUILD file and a 'build' directory.",
+          "type": "string",
+          "default": "",
+          "order": 2,
           "scope": "machine-overridable"
         }
       }
@@ -256,7 +270,8 @@
   "scripts": {
     "vscode:prepublish": "pnpm run esbuild-base --minify",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "pnpm run esbuild-base --sourcemap",
+    "build": "pnpm run clean && pnpm run esbuild-base --sourcemap",
+    "package": "pnpm run build && pnpm vsce package --no-dependencies --out dist",
     "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
     "eslint:fix": "eslint --ignore-path .gitignore . --fix",
     "format": "pnpm prettier:fix",
@@ -267,7 +282,8 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "watch": "pnpm run esbuild-base --sourcemap --watch"
+    "watch": "pnpm run esbuild-base --sourcemap --watch",
+    "clean": "rm -rf dist/"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
@@ -280,7 +296,8 @@
     "prettier": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.3.2",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "vsce": "^2.15.0"
   },
   "pnpm": {
     "overrides": {

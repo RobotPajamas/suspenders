@@ -23,7 +23,9 @@ export class Address {
    */
   static parse(spec: string): Address {
     const addr = spec.split(TARGET_SEPARATOR);
-    return new Address(addr[0], addr[1]);
+    const path = addr[0]
+    const targetName = addr[1]
+    return new Address(path, targetName);
   }
 }
 
