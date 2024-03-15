@@ -55,8 +55,6 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
     const targets = mapPeekResultsToTargets(peekResults);
     const targetMap = createTargetMap(targets);
 
-    console.log(JSON.stringify(targetMap));
-
     const rootTree: PeekTree = {
       id: path.basename(this.rootPath),
       name: "root",
