@@ -277,8 +277,8 @@
     "format": "pnpm prettier:fix",
     "lint": "pnpm prettier && pnpm eslint",
     "lint:fix": "pnpm prettier:fix && pnpm eslint:fix",
-    "prettier": "prettier --ignore-path .prettierignore --plugin-search-dir=. --check .",
-    "prettier:fix": "prettier --ignore-path .prettierignore --plugin-search-dir=. --write .",
+    "prettier": "prettier --ignore-path .prettierignore --check .",
+    "prettier:fix": "prettier --ignore-path .prettierignore --write .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
@@ -286,23 +286,24 @@
     "clean": "rm -rf dist/"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
+    "@types/node": "^20.12.7",
     "@types/vscode": "^1.84.2",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "@vscode/test-electron": "^2.3.8",
-    "esbuild": "^0.19.8",
-    "eslint": "^8.54.0",
-    "prettier": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "@vscode/test-electron": "^2.3.9",
+    "esbuild": "^0.20.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^5.3.2",
-    "vitest": "^0.34.6",
-    "vsce": "^2.15.0"
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
   },
   "pnpm": {
     "overrides": {
       "vite@>=5.0.0 <5.0.5": ">=5.0.5",
       "vite@>=5.0.0 <=5.0.11": ">=5.0.12"
     }
-  }
+  },
+  "packageManager": "pnpm@9.0.4+sha256.caa915eaae9d9aefccf50ee8aeda25a2f8684d8f9d5c6e367eaf176d97c1f89e"
 }

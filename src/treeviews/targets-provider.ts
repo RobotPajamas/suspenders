@@ -67,7 +67,7 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       if (path === "") {
         continue;
       }
-      
+
       if (path === "//") {
         targetMap.get(path)?.forEach((target) => {
           rootTree.targets.push(target);
