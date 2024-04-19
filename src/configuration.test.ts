@@ -1,19 +1,30 @@
 import { ConfigurationTarget, WorkspaceConfiguration } from "vscode";
-import { getPantsExecutable } from "./configuration";
+import { getBuildFileExtension, getPantsExecutable, ignoreLockfiles } from "./configuration";
 
-test("getPantsExecutable should default to `pants` without a valid config", () => {
-  expect(getPantsExecutable(config(""))).toEqual("pants");
-  expect(getPantsExecutable(config(undefined))).toEqual("pants");
+test.each([
+  [getPantsExecutable, "pants"],
+  [getBuildFileExtension, ""],
+  [ignoreLockfiles, true],
+])(
+  "configuration getter should return default value without a valid config",
+  (fn, defaultValue) => {
+    // expect(fn(config(""))).toEqual(defaultValue); // This falls over with the returnDefaultIfUndefined approach
+    expect(fn(config(undefined))).toEqual(defaultValue);
+  }
+);
+
+test.each([
+  [getPantsExecutable, "./pants_from_sources"],
+  [getBuildFileExtension, ".pants"],
+  [ignoreLockfiles, false],
+])("configuration getter should use the user-specified settings when available", (fn, value) => {
+  expect(fn(config(value))).toEqual(value);
 });
 
-test("getPantsExecutable should use the user-specified settings when available", () => {
-  expect(getPantsExecutable(config("./pants_from_sources"))).toEqual("./pants_from_sources");
-});
-
-function config(executable: string | undefined): WorkspaceConfiguration {
+function config(value: string | boolean | undefined): WorkspaceConfiguration {
   return {
     get: (key: string) => {
-      return executable;
+      return value;
     },
     has: (key: string) => {
       throw new Error("Method not implemented.");

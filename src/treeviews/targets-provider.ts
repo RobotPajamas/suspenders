@@ -1,7 +1,8 @@
 import { EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import * as path from "path";
-import { FolderTreeItem, PantsTreeItem, PeekTree, Target } from "./tree-item";
+import { FolderTreeItem, PantsTreeItem, PeekTree, Target, TargetTreeItem } from "./tree-item";
 import { PeekResult, Address, Pants, GoalArg, Options } from "../pants";
+import { ignoreLockfiles } from "../configuration";
 
 export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
   private runner: Pants;
@@ -61,18 +62,29 @@ export class TargetsProvider implements TreeDataProvider<PantsTreeItem> {
       children: new Map(),
     };
 
-    // Attach the targets to the root tree (except for the root folder)
+    // Attach the targets to the root tree
     for (const path of targetMap.keys()) {
       if (path === "") {
         continue;
       }
+
+      if (path === "//") {
+        targetMap.get(path)?.forEach((target) => {
+          rootTree.targets.push(target);
+        });
+      }
+
       this.attach(path, path, rootTree, targetMap);
     }
 
-    // Re-map the PeekTree to a list of FolderTreeItems for rendering
-    return Array.from(rootTree.children.values()).map(
-      (c) => new FolderTreeItem(c, this.runner.buildRoot)
-    );
+    let children: PantsTreeItem[] = [];
+    for (const target of rootTree.targets) {
+      children.push(new TargetTreeItem(target, this.runner.buildRoot));
+    }
+    for (const child of rootTree.children.values()) {
+      children.push(new FolderTreeItem(child, this.runner.buildRoot));
+    }
+    return children;
   }
 
   /**
@@ -143,6 +155,9 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
   const unscopedOptions: Options = {
     "filter-granularity": "BUILD",
   };
+  if (ignoreLockfiles()) {
+    unscopedOptions["filter-target-type"] = "-_lockfiles";
+  }
 
   const result = await runner.execute([goalArgs], target, unscopedOptions);
   return result == "" ? [] : JSON.parse(result);

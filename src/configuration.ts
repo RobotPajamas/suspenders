@@ -12,9 +12,24 @@ export const namespace = "suspenders";
 export function getPantsExecutable(
   config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
 ): string {
-  const pantsExecutable = config.get<string>("executable");
-  if (pantsExecutable) {
-    return pantsExecutable;
+  return returnDefaultIfUndefined(config.get<string>("executable"), "pants").trim();
+}
+
+export function ignoreLockfiles(
+  config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
+): boolean {
+  return returnDefaultIfUndefined(config.get<boolean>("ignoreLockfiles"), true);
+}
+
+export function getBuildFileExtension(
+  config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
+): string {
+  return returnDefaultIfUndefined(config.get<string>("buildFileExtension"), "").trim();
+}
+
+function returnDefaultIfUndefined(value: any, defaultValue: any) {
+  if (value === undefined) {
+    return defaultValue;
   }
-  return "pants";
+  return value;
 }
