@@ -2,13 +2,6 @@ import { WorkspaceConfiguration, workspace } from "vscode";
 
 export const namespace = "suspenders";
 
-function returnDefaultIfUndefined(value: any, defaultValue: any) {
-  if (value === undefined) {
-    return defaultValue;
-  }
-  return value;
-}
-
 /**
  * Returns the path to the Pants executable, as configured in the user's settings.
  * If no valid executable is configured (e.g. empty string), returns "pants".
@@ -32,4 +25,11 @@ export function getBuildFileExtension(
   config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
 ): string {
   return returnDefaultIfUndefined(config.get<string>("buildFileExtension"), "").trim();
+}
+
+function returnDefaultIfUndefined(value: any, defaultValue: any) {
+  if (value === undefined) {
+    return defaultValue;
+  }
+  return value;
 }

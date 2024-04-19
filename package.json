@@ -123,7 +123,7 @@
           "scope": "machine-overridable"
         },
         "suspenders.buildFileExtension": {
-          "description": "Extension used for BUILD files. Usefull when wanting to differentiate between a BUILD file and a 'build' directory.",
+          "description": "Extension used for BUILD files. Useful when wanting to differentiate between a BUILD file and a 'build' directory.",
           "type": "string",
           "default": "",
           "order": 2,
@@ -268,10 +268,11 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run esbuild-base --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "pnpm run clean && pnpm run esbuild-base --sourcemap",
+    "vscode:prepublish": "pnpm run build-base --minify",
+    "build-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "build": "pnpm run clean && pnpm run build-base --sourcemap",
     "package": "pnpm run build && pnpm vsce package --no-dependencies --out dist",
+    "clean": "rm -rf dist/",
     "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
     "eslint:fix": "eslint --ignore-path .gitignore . --fix",
     "format": "pnpm prettier:fix",
@@ -282,8 +283,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "watch": "pnpm run esbuild-base --sourcemap --watch",
-    "clean": "rm -rf dist/"
+    "watch": "pnpm run build-base --sourcemap --watch"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
@@ -291,6 +291,7 @@
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "@vscode/test-electron": "^2.3.9",
+    "@vscode/vsce": "^2.26.0",
     "esbuild": "^0.20.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
