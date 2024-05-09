@@ -286,7 +286,7 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.11",
     "@types/vscode": "^1.84.2",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
