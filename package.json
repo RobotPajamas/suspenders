@@ -297,8 +297,10 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
+    "pyright": "^1.1.362",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.0"
+    "vitest": "^1.5.0",
+    "vscode-languageclient": "^9.0.1"
   },
   "pnpm": {
     "overrides": {
