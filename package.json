@@ -285,6 +285,9 @@
     "test:watch": "vitest",
     "watch": "pnpm run build-base --sourcemap --watch"
   },
+  "dependencies": {
+    "pyright": "^1.1.362"
+  },
   "devDependencies": {
     "@types/node": "^20.12.7",
     "@types/vscode": "^1.84.2",
@@ -297,7 +300,6 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "pyright": "^1.1.362",
     "typescript": "^5.4.5",
     "vitest": "^1.5.0",
     "vscode-languageclient": "^9.0.1"

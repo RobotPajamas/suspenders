@@ -10,6 +10,10 @@ overrides:
 
 importers:
   .:
+    dependencies:
+      pyright:
+        specifier: ^1.1.362
+        version: 1.1.362
     devDependencies:
       "@types/node":
         specifier: ^20.12.7
@@ -44,9 +48,6 @@ importers:
       prettier-plugin-organize-imports:
         specifier: ^3.2.4
         version: 3.2.4(prettier@3.2.5)(typescript@5.4.5)
-      pyright:
-        specifier: ^1.1.362
-        version: 1.1.362
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
