@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 import { GoalArg, Options } from "./goals";
 import { getPantsExecutable } from "../configuration";
 
@@ -29,7 +29,7 @@ export class Pants {
     }
 
     // Build up the command from the executable, scoped options, goals, and target
-    const args = [this.exe];
+    const args = [];
     if (scopedOptions) {
       args.push(...this.buildOptions(scopedOptions));
     }
@@ -42,9 +42,13 @@ export class Pants {
 
     // Run the command and return the output
     const command = args.join(" ");
-    const stdout = execSync(command, { cwd: this.buildRoot, encoding: "utf-8" }).toString().trim();
-
-    return stdout;
+    // TODO: Use `spawn` and handle this in buffered chunks
+    const result = spawnSync(this.exe, args, {
+      cwd: this.buildRoot,
+      encoding: "utf-8",
+      maxBuffer: 1024 * 1024 * 5, // 5MB seems reasonable as a max for help-all
+    });
+    return result.stdout?.trim() ?? "";
   }
 
   private buildGoalArg(goal: GoalArg): string[] {

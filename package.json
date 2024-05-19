@@ -103,6 +103,11 @@
         "title": "Refresh targets",
         "icon": "$(refresh)",
         "category": "Pants"
+      },
+      {
+        "command": "suspenders.generateBuiltins",
+        "title": "Re-generate BUILD LSP data",
+        "category": "Pants"
       }
     ],
     "configuration": {
