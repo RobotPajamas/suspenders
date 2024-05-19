@@ -1,14 +1,14 @@
 import { Pants } from "../pants";
 import { SourceRootsProvider, listSourceRoots } from "./source-roots-provider";
 import { SourceRoot } from "./tree-item";
-import { execSync } from "child_process";
+import { spawnSync, SpawnSyncReturns } from "child_process";
 
 vi.mock("child_process");
 
 test("listSourceRoots should return an empty list if Pants does not return any source roots", async () => {
   const runner = new Pants("any/path/to/workspace");
 
-  vi.mocked(execSync).mockReturnValue("");
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: "" });
   expect(await listSourceRoots(runner)).toEqual([]);
 });
 
@@ -16,7 +16,7 @@ test("listSourceRoots should return a list of source roots if Pants returns sour
   const runner = new Pants("any/path/to/workspace");
 
   const stdout = "src/helloworld\nsrc/goodbyeworld\n";
-  vi.mocked(execSync).mockReturnValue(stdout);
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout });
   expect(await listSourceRoots(runner)).toEqual(["src/helloworld", "src/goodbyeworld"]);
 });
 
@@ -39,7 +39,7 @@ test("getChildren should return an empty list if there is no rootPath", async ()
 });
 
 test("getChildren should return an empty list if Pants does not return any source roots", async () => {
-  vi.mocked(execSync).mockReturnValue("");
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: "" });
 
   const provider = new SourceRootsProvider("any/path/to/workspace");
   expect(await provider.getChildren()).toEqual([]);
@@ -47,7 +47,7 @@ test("getChildren should return an empty list if Pants does not return any sourc
 
 test("getChildren should return a list of source roots if Pants returns source roots", async () => {
   const stdout = "src/helloworld\nsrc/goodbyeworld\n";
-  vi.mocked(execSync).mockReturnValue(stdout);
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout });
 
   const provider = new SourceRootsProvider("any/path/to/workspace");
   expect(await provider.getChildren()).toEqual([
@@ -55,3 +55,13 @@ test("getChildren should return a list of source roots if Pants returns source r
     new SourceRoot("src/goodbyeworld"),
   ]);
 });
+
+const spawned: SpawnSyncReturns<string> = {
+  stdout: "",
+  stderr: "",
+  pid: 42,
+  output: ["", ""],
+  signal: null,
+  status: 0,
+  error: undefined,
+};
