@@ -1,11 +1,15 @@
-.vscode/**
-.vscode-test/**
-node_modules/**
-src/**
-.gitignore
-.yarnrc
-vsc-extension-quickstart.md
-**/tsconfig.json
-**/.eslintrc.json
-**/*.map
-**/*.ts
+# Ignore everything
+**
+
+# Whitelist only what we want in the final package
+!assets/pants-logo.svg
+!assets/pants-logo-square.png
+!dist/main.js
+!schemas/lift.schema.json
+!schemas/science.schema.json
+!syntaxes/language-configuration.json
+!syntaxes/pantsbuild.tmLanguage.json
+!CHANGELOG.md
+!LICENSE
+!package.json
+!README.md
