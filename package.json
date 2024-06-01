@@ -289,7 +289,7 @@
     "@types/node": "^20.12.7",
     "@types/vscode": "^1.84.2",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.7.0",
+    "@typescript-eslint/parser": "^7.11.0",
     "@vscode/test-electron": "^2.3.9",
     "@vscode/vsce": "^2.26.0",
     "esbuild": "^0.20.2",
