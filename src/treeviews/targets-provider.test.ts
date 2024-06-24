@@ -1,5 +1,5 @@
 import { Address, Pants, PeekResult } from "../pants";
-import { execSync } from "child_process";
+import { SpawnSyncReturns, spawnSync } from "child_process";
 import {
   TargetsProvider,
   createTargetMap,
@@ -13,20 +13,20 @@ vi.mock("child_process");
 test("peek should return an empty list if Pants does not return any targets", async () => {
   const runner = new Pants("any/path/to/workspace");
 
-  vi.mocked(execSync).mockReturnValue("");
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: "" });
   expect(await peek(runner, "::")).toEqual([]);
 
-  // vi.mocked(execSync).mockReturnValue("{}");
+  // vi.mocked(spawnSync).mockReturnValue("{}");
   // expect(await peek(runner, "::")).toEqual([]);
 
-  vi.mocked(execSync).mockReturnValue("[]");
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: "[]" });
   expect(await peek(runner, "::")).toEqual([]);
 });
 
 test("peek should return a list of PeekResults if Pants returns targets", async () => {
   const runner = new Pants("any/path/to/workspace");
 
-  vi.mocked(execSync).mockReturnValue(samplePeekStdOut);
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: samplePeekStdOut });
   expect(await peek(runner, "::")).containSubset(samplePeekResults);
 });
 
@@ -59,14 +59,14 @@ test("getChildren should return an empty list if there is no rootPath", async ()
 });
 
 test("getChildren should return an empty list if Pants does not return any peeked targets", async () => {
-  vi.mocked(execSync).mockReturnValue("[]");
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: "[]" });
 
   const provider = new TargetsProvider("any/path/to/workspace");
   expect(await provider.getChildren()).toEqual([]);
 });
 
 test("getChildren should return a list of PantsTreeItems if Pants returns peeked targets", async () => {
-  vi.mocked(execSync).mockReturnValue(samplePeekStdOut);
+  vi.mocked(spawnSync).mockReturnValue({ ...spawned, stdout: samplePeekStdOut });
 
   const provider = new TargetsProvider("any/path/to/workspace");
   const children = await provider.getChildren();
@@ -165,3 +165,13 @@ const expectedSimplifiedPantsTreeItems = [
     iconPath: {},
   },
 ];
+
+const spawned: SpawnSyncReturns<string> = {
+  stdout: "",
+  stderr: "",
+  pid: 42,
+  output: ["", ""],
+  signal: null,
+  status: 0,
+  error: undefined,
+};

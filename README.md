@@ -23,6 +23,10 @@ In addition, the command palette has been enhanced with several pants specific c
 - Run `lint` goal on all targets
 - Run `test` goal on all targets
 
+### BUILD LSP
+
+Experimental build file LSP support was added in [PR #105](https://github.com/RobotPajamas/suspenders/pull/105). It currently requires a manual step of opening the command palette and selecting "Pants: Re-generate BUILD LSP data". This generates BUILD file Python stubs, and restarts `pyright` which now knows to look for those stubs.
+
 ## Recommended Plugins
 
 - [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) - Provides syntax highlighting for `pants.toml` files, and allows using a Pants.toml JSON schema for validation.

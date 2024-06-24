@@ -103,6 +103,11 @@
         "title": "Refresh targets",
         "icon": "$(refresh)",
         "category": "Pants"
+      },
+      {
+        "command": "suspenders.generateBuiltins",
+        "title": "Re-generate BUILD LSP data",
+        "category": "Pants"
       }
     ],
     "configuration": {
@@ -258,12 +263,12 @@
     ],
     "tomlValidation": [
       {
-        "fileMatch": "pants.toml",
+        "fileMatch": "pants*.toml",
         "url": "https://json.schemastore.org/pantsbuild-2.15.0"
       },
       {
-        "fileMatch": "science.toml",
-        "url": "https://json.schemastore.org/cargo.json"
+        "fileMatch": "science*.toml",
+        "url": "https://json.schemastore.org/pantsbuild-2.15.0"
       }
     ]
   },
@@ -285,6 +290,9 @@
     "test:watch": "vitest",
     "watch": "pnpm run build-base --sourcemap --watch"
   },
+  "dependencies": {
+    "pyright": "^1.1.362"
+  },
   "devDependencies": {
     "@types/node": "^20.14.8",
     "@types/vscode": "^1.90.0",
@@ -298,7 +306,8 @@
     "prettier": "^3.3.2",
     "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.5.2",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "vscode-languageclient": "^9.0.1"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

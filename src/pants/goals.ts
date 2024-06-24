@@ -1,7 +1,16 @@
 import { Address } from "./address";
 import { Pants } from "./runner";
 
-export type Goal = "check" | "fmt" | "lint" | "test" | "peek" | "dependencies" | "roots" | "list";
+export type Goal =
+  | "check"
+  | "fmt"
+  | "lint"
+  | "test"
+  | "peek"
+  | "dependencies"
+  | "roots"
+  | "list"
+  | "help-all";
 
 /**
  * A map of options to pass to the Pants runner.
