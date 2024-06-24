@@ -61,7 +61,7 @@ export function createLanguageClient(context: vscode.ExtensionContext): Language
           for (const [i, item] of params.items.entries()) {
             logger.debug(`Entries: ${i} ${JSON.stringify(item)}`);
 
-            // TODO: Hardcoding this as a proof-of-concept, but this should probably be part of Suspenders config
+            // TODO: Hardcoding this as a proof-of-concept, but this should probably be part of Suspenders config (and maybe `.pants.d/suspenders` or `/pyright` or something)
             if (item.section === "python.analysis") {
               (result[i] as any).stubPath = "./.pants.d";
             }
@@ -81,6 +81,7 @@ export async function generateBuiltinsFile(rootPath?: string) {
   const runner = new Pants(rootPath ?? "");
   const result = await runner.execute([{ goal: "help-all" }]);
   const fileContent = generateBuiltins(result);
+
   // Write file to .pants.d/__builtins__.pyi
   const builtinsPath = path.join(runner.buildRoot, ".pants.d", "__builtins__.pyi");
   await vscode.workspace.fs.writeFile(vscode.Uri.file(builtinsPath), Buffer.from(fileContent));
@@ -90,5 +91,3 @@ export async function generateBuiltinsFile(rootPath?: string) {
 function isThenable<T>(v: any): v is Thenable<T> {
   return typeof v?.then === "function";
 }
-
-// export

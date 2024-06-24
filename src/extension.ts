@@ -77,6 +77,9 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("suspenders.generateBuiltins", async () => {
       try {
         await generateBuiltinsFile(rootPath);
+        lspClient.sendNotification(DidChangeConfigurationNotification.type, {
+          settings: null,
+        });
       } catch (e) {
         logger.error(`Error generating builtins file: ${e}`);
       }
