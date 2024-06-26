@@ -1,8 +1,10 @@
 /**
  * A Typescript/VSCode port of the utils/generate-builtins concept that will need to be built into Pants eventually
- * Instead of creating a PR and waiting for that to be released first (which would limit LSP functionality to probably 2.20+),
+ * Instead of creating a PR and waiting for that to be released first (which would limit LSP functionality to probably 2.23+),
  * makes sense to hack together a quick TS version and use this as a backport
  */
+
+import { AllHelpInfo, TargetTypeHelpInfo } from "../pants";
 
 /**
  * From the `pants help-all` JSON string, create the file content for a `__builtins__.pyi` stub for pyright
@@ -20,47 +22,6 @@ export function generateBuiltins(help_json: string): string {
   }
 
   return FILE_TEMPLATE.replace("{functions}", functionStubs.join("\n\n"));
-}
-
-/**
- * "All available help info."
- * Corresponds to `AllHelpInfo` in help_info_extracter.py in Pants
- * Commenting the fields we don't need here
- */
-interface AllHelpInfo {
-  // scope_to_help_info: { [key: string]: any };
-  // name_to_goal_info: { [key: string]: any };
-  name_to_target_type_info: { [key: string]: TargetTypeHelpInfo };
-  // name_to_rule_info: { [key: string]: any };
-  // name_to_api_type_info: { [key: string]: any };
-  // name_to_backend_help_info: { [key: string]: any };
-  // name_to_build_file_info: { [key: string]: any };
-  // env_var_to_help_info: { [key: string]: any };
-}
-
-/**
- * "A container for help information for a target type."
- * Corresponds to `TargetTypeHelpInfo` in help_info_extracter.py in Pants
- */
-interface TargetTypeHelpInfo {
-  alias: string;
-  description: string;
-  fields: TargetFieldHelpInfo[];
-  provider: string;
-  summary: string;
-}
-
-/**
- * "A container for help information for a field in a target type."
- * Corresponds to `FieldHelpInfo` in help_info_extracter.py in Pants
- */
-interface TargetFieldHelpInfo {
-  alias: string;
-  default?: string;
-  description: string;
-  provider: string;
-  required: boolean;
-  type_hint: string;
 }
 
 function makeFunctionStub(t: TargetTypeHelpInfo): string {

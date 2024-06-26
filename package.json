@@ -263,12 +263,12 @@
     ],
     "tomlValidation": [
       {
-        "fileMatch": "pants.toml",
-        "url": "file://./.pants.d/suspenders/pants.toml.json"
+        "fileMatch": "lift.toml",
+        "url": "./schemas/lift.toml.json"
       },
       {
-        "fileMatch": "science*.toml",
-        "url": "https://json.schemastore.org/pantsbuild-2.15.0"
+        "fileMatch": "pants.toml",
+        "url": "file://./.pants.d/suspenders/pants.toml.json"
       }
     ]
   },
