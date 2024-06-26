@@ -14,4 +14,8 @@
 !package.json
 !README.md
 
-!node_modules
+# Explicitly whitelist pyright and the stdlib (otherwise we 2x the size of the extension)
+!node_modules/pyright/*
+!node_modules/pyright/dist/*
+!node_modules/pyright/dist/typeshed-fallback/*
+!node_modules/pyright/dist/typeshed-fallback/stdlib/*

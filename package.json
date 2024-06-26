@@ -273,10 +273,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run build-base -- --minify",
+    "vscode:prepublish": "pnpm run build-base --minify",
     "build-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "npm run clean && npm run build-base --sourcemap",
-    "package": "npm run build && vsce package  --pre-release --out dist",
+    "build": "pnpm run clean && pnpm run build-base --sourcemap",
+    "package": "pnpm run build && vsce package --pre-release --out dist",
     "clean": "rm -rf dist/",
     "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
     "eslint:fix": "eslint --ignore-path .gitignore . --fix",
