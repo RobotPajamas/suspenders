@@ -3,6 +3,7 @@
 .env.*
 !.env.example
 
+/.pants.d/
 /build/
 /coverage/
 /dist/
