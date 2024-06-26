@@ -264,7 +264,7 @@
     "tomlValidation": [
       {
         "fileMatch": "lift.toml",
-        "url": "./schemas/lift.toml.json"
+        "url": "file://./.pants.d/suspenders/lift.toml.json"
       },
       {
         "fileMatch": "pants.toml",

@@ -14,6 +14,7 @@ import * as vscode from "vscode";
 import { Pants } from "../pants";
 import { generateBuiltins } from "./builtins";
 import { generateJsonSchema } from "./schema";
+import liftJson from "./lift.toml.json";
 
 // TODO: Grabbed this from https://github.com/microsoft/pyright/blob/496e50f65c8d3aecc43dcbc9b960d633cafe0c94/packages/vscode-pyright/src/extension.ts#L96
 // Spend some time cleaning it up for our purposes
@@ -95,6 +96,14 @@ export async function generateBuiltinsFile(rootPath?: string) {
   const schemaPath = path.join(basePath, "pants.toml.json");
   await vscode.workspace.fs.writeFile(vscode.Uri.file(schemaPath), Buffer.from(schemaContent));
   logger.info(`Wrote pants.schema.json to ${schemaPath}`);
+
+  // Re-write hardcoded Lift JSON schema (due to tamasfe/taplo#322)
+  const liftPath = path.join(basePath, "lift.toml.json");
+  await vscode.workspace.fs.writeFile(
+    vscode.Uri.file(liftPath),
+    Buffer.from(JSON.stringify(liftJson, null, 2))
+  );
+  logger.info(`Wrote lift.toml.json to ${liftPath}`);
 }
 
 function isThenable<T>(v: any): v is Thenable<T> {
