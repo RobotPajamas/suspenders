@@ -3,7 +3,7 @@
   "title": "Generated schema for Science config",
   "type": "object",
   "properties": {
-    "science": {
+    "lift": {
       "type": "object",
       "properties": {
         "name": {
