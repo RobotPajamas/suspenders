@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Generated schema for Science config",
+  "title": "Generated schema for Lift config",
   "type": "object",
   "properties": {
     "lift": {

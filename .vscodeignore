@@ -6,7 +6,7 @@
 !assets/pants-logo-square.png
 !dist/main.js
 !schemas/lift.schema.json
-!schemas/science.schema.json
+!schemas/lift.toml.json
 !syntaxes/language-configuration.json
 !syntaxes/pantsbuild.tmLanguage.json
 !CHANGELOG.md

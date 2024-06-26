@@ -1,12 +1,10 @@
-# Note: This will currently not work!
-
-The merged code is in the process of being cleaned up and re-written, and it requires a change to `peek` that has not been mainlined. So, for a few weeks, this source code will be super janky.
-
 # Suspenders
 
-Suspenders is a (very) alpha VS Code extension to provide [Pants](https://github.com/pantsbuild/pants) users with some quality-of-workflow improvements.
+Suspenders is an alpha VS Code extension to provide [Pants](https://github.com/pantsbuild/pants) users with some quality-of-workflow improvements.
 
-**Note:** A lot of this functionality is proof-of-concept, as Pants requires some additions and optimizations to be able to provide a good experience in VS Code. This extension is being used to determine what can be done, and what needs to be added to Pants. As features are added in Pants, those features can remove the "proof-of-concept" label from this extension.
+This repo contains several proof-of-concepts, as Pants requires some additions and optimizations to be able to provide a good experience in VS Code. However, I've found enough utility in several features (e.g. BUILD LSP and TOML schema), that I would consider this a useful plugin to have for Pants users/developers/maintainers.
+
+## Activation
 
 The extension is loaded upon there being a `pants.toml` file in the workspace root.
 
@@ -26,6 +24,14 @@ In addition, the command palette has been enhanced with several pants specific c
 ### BUILD LSP
 
 Experimental build file LSP support was added in [PR #105](https://github.com/RobotPajamas/suspenders/pull/105). It currently requires a manual step of opening the command palette and selecting "Pants: Re-generate BUILD LSP data". This generates BUILD file Python stubs, and restarts `pyright` which now knows to look for those stubs.
+
+### Pants.toml JSON Schema
+
+There is already a JSON schema file uploaded to schema store for each minor release of Pants (e.g. https://json.schemastore.org/pantsbuild-2.21.0.json). Users can setup [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) to point to this schema.
+
+Suspenders, however, will generate a `pants.toml` JSON schema for your currently enabled backends upon running "Pants: Re-generate BUILD LSP data". This schema is a subset of the one on schema store.
+
+The only real difference to the user is that the schema store variant might show autocompletions that aren't available until the user activates a specific backend, while the Suspenders-generated version shouldn't have that use case.
 
 ## Recommended Plugins
 
