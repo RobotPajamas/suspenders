@@ -22,6 +22,7 @@ export function createLanguageClient(context: vscode.ExtensionContext): Language
   let serverModule = context.asAbsolutePath(
     path.join("node_modules", "pyright", "langserver.index.js")
   );
+  logger.debug(`createLanguageClient: Server Module: ${serverModule}`);
   const debugOptions = { execArgv: ["--nolazy", "--inspect=6600"] };
 
   // TODO: Is stdio necessary? I ran into some errors using node ipc, but maybe those were false positives

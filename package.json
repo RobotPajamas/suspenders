@@ -2,7 +2,7 @@
   "name": "vscode-suspenders",
   "displayName": "Suspenders",
   "description": "PantsBuild support for VS Code",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "robotpajamas",
   "preview": true,
   "private": true,
@@ -274,9 +274,9 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run build-base --minify",
-    "build-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
-    "build": "pnpm run clean && pnpm run build-base --sourcemap",
-    "package": "pnpm run build && pnpm vsce package --no-dependencies --pre-release --out dist",
+    "build-base": "pnpm run clean && esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "build": "pnpm run build-base --sourcemap",
+    "package": "pnpm vsce package --out dist",
     "clean": "rm -rf dist/",
     "eslint": "eslint --ignore-path .gitignore --max-warnings=0 .",
     "eslint:fix": "eslint --ignore-path .gitignore . --fix",
@@ -291,7 +291,7 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.362"
+    "pyright": "^1.1.369"
   },
   "devDependencies": {
     "@types/node": "^20.14.8",

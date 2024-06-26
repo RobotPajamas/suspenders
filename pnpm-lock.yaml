@@ -8,8 +8,8 @@ importers:
   .:
     dependencies:
       pyright:
-        specifier: ^1.1.362
-        version: 1.1.368
+        specifier: ^1.1.369
+        version: 1.1.369
     devDependencies:
       "@types/node":
         specifier: ^20.14.8
@@ -2588,10 +2588,10 @@ packages:
       }
     engines: { node: ">=6" }
 
-  pyright@1.1.368:
+  pyright@1.1.369:
     resolution:
       {
-        integrity: sha512-BGFsdP7H3T7fNqiOOa28YhHBCJoi03jcho8/LD7ZoVlPgYY73T7djOQ1rdXvJjCJFTMHc52LuLHMZS+JmMl1NA==,
+        integrity: sha512-K0mQzVNSN5yq+joFK0JraOlhtL2HKrubCa+SnFznkLsnoZKbmq7M8UpSSDsJKPFfevkmqOKodgGzvt27C6RJAg==,
       }
     engines: { node: ">=14.0.0" }
     hasBin: true
@@ -4718,7 +4718,7 @@ snapshots:
 
   punycode@2.3.0: {}
 
-  pyright@1.1.368:
+  pyright@1.1.369:
     optionalDependencies:
       fsevents: 2.3.3
 
