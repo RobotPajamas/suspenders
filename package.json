@@ -294,7 +294,7 @@
     "pyright": "^1.1.369"
   },
   "devDependencies": {
-    "@types/node": "^20.14.8",
+    "@types/node": "^22.0.2",
     "@types/vscode": "^1.90.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
