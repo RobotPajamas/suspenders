@@ -27,6 +27,12 @@ export function getBuildFileExtension(
   return returnDefaultIfUndefined(config.get<string>("buildFileExtension"), "").trim();
 }
 
+export function shouldGenerateBuiltinsOnSave(
+  config: WorkspaceConfiguration = workspace.getConfiguration(namespace)
+): string {
+  return returnDefaultIfUndefined(config.get<boolean>("generateBuiltinsOnSave"), false);
+}
+
 function returnDefaultIfUndefined(value: any, defaultValue: any) {
   if (value === undefined) {
     return defaultValue;

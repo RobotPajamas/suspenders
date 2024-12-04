@@ -133,6 +133,13 @@
           "default": "",
           "order": 2,
           "scope": "machine-overridable"
+        },
+        "suspenders.generateBuiltinsOnSave": {
+          "description": "Re-generate the BUILD LSP data when `pants.toml` has changes and then is saved.",
+          "type": "boolean",
+          "default": false,
+          "order": 3,
+          "scope": "machine-overridable"
         }
       }
     },
