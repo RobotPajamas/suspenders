@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       pyright:
-        specifier: ^1.1.388
-        version: 1.1.388
+        specifier: ^1.1.390
+        version: 1.1.390
     devDependencies:
       "@types/node":
         specifier: ^22.10.1
@@ -34,11 +34,11 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0
       prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
+        specifier: ^3.4.2
+        version: 3.4.2
       prettier-plugin-organize-imports:
         specifier: ^4.1.0
-        version: 4.1.0(prettier@3.3.3)(typescript@5.7.2)
+        version: 4.1.0(prettier@3.4.2)(typescript@5.7.2)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -2056,10 +2056,10 @@ packages:
       vue-tsc:
         optional: true
 
-  prettier@3.3.3:
+  prettier@3.4.2:
     resolution:
       {
-        integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==,
+        integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==,
       }
     engines: { node: ">=14" }
     hasBin: true
@@ -2083,10 +2083,10 @@ packages:
       }
     engines: { node: ">=6" }
 
-  pyright@1.1.388:
+  pyright@1.1.390:
     resolution:
       {
-        integrity: sha512-AcQhtxh/Dnr3l0CinT2xUzsNHpOFVI304EzwY9Y9A3FC8JOV5YJTC3fvrh6zOgHDUH7S6PYABaUdHr/e4rv8+g==,
+        integrity: sha512-dyt10l7TjuasVMCY4L6k8xggpp8X7dR4Mq/zsaA5Usa2pqBkZ+g73vs0mc8ungsyPhCDWz8rMdQjsAeMuKgciw==,
       }
     engines: { node: ">=14.0.0" }
     hasBin: true
@@ -3724,12 +3724,12 @@ snapshots:
       tunnel-agent: 0.6.0
     optional: true
 
-  prettier-plugin-organize-imports@4.1.0(prettier@3.3.3)(typescript@5.7.2):
+  prettier-plugin-organize-imports@4.1.0(prettier@3.4.2)(typescript@5.7.2):
     dependencies:
-      prettier: 3.3.3
+      prettier: 3.4.2
       typescript: 5.7.2
 
-  prettier@3.3.3: {}
+  prettier@3.4.2: {}
 
   process-nextick-args@2.0.1: {}
 
@@ -3741,7 +3741,7 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
-  pyright@1.1.388:
+  pyright@1.1.390:
     optionalDependencies:
       fsevents: 2.3.3
 
