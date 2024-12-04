@@ -163,38 +163,6 @@
           "when": "suspenders:isActivated"
         }
       ],
-      "view/item/context": [
-        {
-          "command": "suspenders.deployTarget",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /experimental-deploy/"
-        },
-        {
-          "command": "suspenders.packageTarget",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /package/"
-        },
-        {
-          "command": "suspenders.publishTarget",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /publish/"
-        },
-        {
-          "command": "suspenders.runTarget",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /run/"
-        },
-        {
-          "command": "suspenders.testTarget",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /test/"
-        },
-        {
-          "command": "suspenders.testTargetTransitively",
-          "group": "suspenders",
-          "when": "view == targets && viewItem =~ /test/"
-        }
-      ],
       "view/title": [
         {
           "command": "suspenders.source-roots.refresh",

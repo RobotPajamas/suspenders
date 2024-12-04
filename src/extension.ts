@@ -2,8 +2,6 @@ import * as proc from "child_process";
 import * as vscode from "vscode";
 import { TargetsProvider, SourceRootsProvider } from "./treeviews";
 import { logger } from "./logging";
-import { CodeLensProvider } from "./codelens";
-import { TestsProvider } from "./test-explorer";
 import { getPantsExecutable } from "./configuration";
 import { createLanguageClient, generateBuiltinsFile } from "./lsp/client";
 import { DidChangeConfigurationNotification, LanguageClient } from "vscode-languageclient/node";
@@ -60,18 +58,6 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   vscode.commands.executeCommand("setContext", "suspenders:isActivated", true);
-
-  // const codeLensProvider = new CodeLensProvider();
-  // vscode.languages.registerCodeLensProvider({ pattern: "**/BUILD*" }, codeLensProvider);
-
-  const testController = vscode.tests.createTestController(
-    "suspenders-test-controller",
-    "All of the Tests"
-  );
-  const testsProvider = new TestsProvider(testController);
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.tests.refresh", () => testsProvider.refresh())
-  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("suspenders.generateBuiltins", async () => {
