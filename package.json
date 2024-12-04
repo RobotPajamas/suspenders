@@ -287,19 +287,19 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.388"
+    "pyright": "^1.1.390"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "@types/vscode": "^1.95.0",
     "@vscode/test-electron": "^2.4.1",
     "@vscode/vsce": "^3.2.1",
     "esbuild": "^0.24.0",
-    "oxlint": "^0.11.1",
-    "prettier": "^3.3.3",
+    "oxlint": "^0.14.0",
+    "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.4",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
     "vscode-languageclient": "^9.0.1"
   },
   "pnpm": {
@@ -308,5 +308,5 @@
       "@azure/identity@<4.2.1": ">=4.2.1"
     }
   },
-  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
+  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
 }
