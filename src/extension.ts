@@ -2,7 +2,7 @@ import * as proc from "child_process";
 import * as vscode from "vscode";
 import { TargetsProvider, SourceRootsProvider } from "./treeviews";
 import { logger } from "./logging";
-import { getPantsExecutable } from "./configuration";
+import { getPantsExecutable, shouldGenerateBuiltinsOnSave } from "./configuration";
 import { createLanguageClient, generateBuiltinsFile } from "./lsp/client";
 import { DidChangeConfigurationNotification, LanguageClient } from "vscode-languageclient/node";
 
@@ -79,6 +79,33 @@ export async function activate(context: vscode.ExtensionContext) {
   lspClient.sendNotification(DidChangeConfigurationNotification.type, {
     settings: null,
   });
+
+  // TODO: Where should variables like this be held?
+  let isTomlDirty = false;
+  context.subscriptions.push(
+    vscode.workspace.onWillSaveTextDocument((event) => {
+      logger.debug(
+        `WillSave: File ${event.document.fileName} - isDirty ${event.document.isDirty} - Reason ${event.reason}`
+      );
+      if (event.document.fileName === `${rootPath}/pants.toml`) {
+        isTomlDirty = event.document.isDirty;
+      }
+    })
+  );
+  context.subscriptions.push(
+    vscode.workspace.onDidSaveTextDocument((doc) => {
+      // TODO: An optimization would be to create or dispose of this subscription when config changes
+      if (!shouldGenerateBuiltinsOnSave()) {
+        return;
+      }
+      logger.log(`DidSave: ${doc.fileName} - ${doc.isDirty}`);
+      if (doc.fileName === `${rootPath}/pants.toml` && isTomlDirty) {
+        // TODO: Should notify the user, and then self-dismiss when complete
+        vscode.commands.executeCommand("suspenders.generateBuiltins");
+        isTomlDirty = false;
+      }
+    })
+  );
 }
 
 export function deactivate() {

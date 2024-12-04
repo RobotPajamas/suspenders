@@ -1,10 +1,16 @@
 import { ConfigurationTarget, WorkspaceConfiguration } from "vscode";
-import { getBuildFileExtension, getPantsExecutable, ignoreLockfiles } from "./configuration";
+import {
+  getBuildFileExtension,
+  getPantsExecutable,
+  ignoreLockfiles,
+  shouldGenerateBuiltinsOnSave,
+} from "./configuration";
 
 test.each([
   [getPantsExecutable, "pants"],
   [getBuildFileExtension, ""],
   [ignoreLockfiles, true],
+  [shouldGenerateBuiltinsOnSave, false],
 ])(
   "configuration getter should return default value without a valid config",
   (fn, defaultValue) => {
@@ -17,6 +23,7 @@ test.each([
   [getPantsExecutable, "./pants_from_sources"],
   [getBuildFileExtension, ".pants"],
   [ignoreLockfiles, false],
+  [shouldGenerateBuiltinsOnSave, true],
 ])("configuration getter should use the user-specified settings when available", (fn, value) => {
   expect(fn(config(value))).toEqual(value);
 });
