@@ -10,8 +10,19 @@ export interface AllHelpInfo {
   // name_to_rule_info: { [key: string]: any };
   // name_to_api_type_info: { [key: string]: any };
   // name_to_backend_help_info: { [key: string]: any };
-  // name_to_build_file_info: { [key: string]: any };
+  name_to_build_file_info: { [key: string]: BuildFileSymbolHelpInfo };
   // env_var_to_help_info: { [key: string]: any };
+}
+
+/**
+ * Corresponds to `BuildFileSymbolHelpInfo` in help_info_extracter.py in Pants
+ * https://www.pantsbuild.org/stable/reference/build-file-symbols/
+ */
+export interface BuildFileSymbolHelpInfo {
+  name: string;
+  is_target: boolean;
+  signature?: string;
+  documentation?: string;
 }
 
 /**

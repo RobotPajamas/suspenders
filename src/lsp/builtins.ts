@@ -4,7 +4,7 @@
  * makes sense to hack together a quick TS version and use this as a backport
  */
 
-import { AllHelpInfo, TargetTypeHelpInfo } from "../pants";
+import { AllHelpInfo, BuildFileSymbolHelpInfo, TargetTypeHelpInfo } from "../pants";
 
 /**
  * From the `pants help-all` JSON string, create the file content for a `__builtins__.pyi` stub for pyright
@@ -16,12 +16,37 @@ import { AllHelpInfo, TargetTypeHelpInfo } from "../pants";
 export function generateBuiltins(help_json: string): string {
   const helpInfo: AllHelpInfo = JSON.parse(help_json);
 
-  const functionStubs: string[] = [];
+  const stubs: string[] = [];
   for (const [k, v] of Object.entries(helpInfo.name_to_target_type_info)) {
-    functionStubs.push(makeFunctionStub(v));
+    stubs.push(makeFunctionStub(v));
+  }
+  for (const [k, v] of Object.entries(helpInfo.name_to_build_file_info)) {
+    // the Targets should already be captured by the `name_to_target_type`
+    if (v.is_target == false) {
+      stubs.push(makeBuildStub(v));
+    }
   }
 
-  return FILE_TEMPLATE.replace("{functions}", functionStubs.join("\n\n"));
+  return FILE_TEMPLATE.replace("{functions}", stubs.join("\n\n"));
+}
+
+// TODO: Note that there isn't as much BuildFile information, so stubs gonna be stubby
+// Example:
+// "python_artifact": {
+//   "documentation": "Represents a Python setup.py-based project.",
+//   "is_target": false,
+//   "name": "python_artifact",
+//   "signature": "(**kwargs) -> None"
+// },
+function makeBuildStub(b: BuildFileSymbolHelpInfo): string {
+  if (b.name === "python_artifact" || b.name === "setup_py") {
+    b.signature = b.signature?.replace("None", "PythonArtifact");
+  }
+
+  return `def ${b.name}${b.signature}:
+    """
+    ${b.documentation}
+    """`;
 }
 
 function makeFunctionStub(t: TargetTypeHelpInfo): string {
@@ -67,6 +92,8 @@ from collections.abc import Iterable
 from typing import Any, Dict, Tuple, Union
 
 # Not quite accurate - but good enough for typings
-FrozenDict = Dict<string, any>
+FrozenDict = Dict[str, Any]
+
+class PythonArtifact: ...
 
 {functions}`;
