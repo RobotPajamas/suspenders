@@ -262,7 +262,7 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.390"
+    "pyright": "^1.1.391"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
