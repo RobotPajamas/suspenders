@@ -277,12 +277,11 @@
     "vitest": "^3.0.4",
     "vscode-languageclient": "^9.0.1"
   },
+  "packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4",
   "pnpm": {
     "overrides": {
-      "@azure/msal-node@>=2.7.0 <2.9.2": ">=2.9.2",
-      "@azure/identity@<4.2.1": ">=4.2.1",
-      "cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5"
+      "nanoid@<3.3.8": ">=3.3.8",
+      "vite@>=5.0.0 <=5.4.11": ">=5.4.12"
     }
-  },
-  "packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4"
+  }
 }
