@@ -24,9 +24,9 @@
     "tools"
   ],
   "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0",
-    "vscode": ">=1.90.0"
+    "node": ">=22.0.0",
+    "pnpm": ">=9.15.0",
+    "vscode": ">=1.95.0"
   },
   "categories": [
     "Programming Languages",
@@ -262,27 +262,26 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.390"
+    "pyright": "^1.1.393"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
+    "@types/node": "^22.13.0",
     "@types/vscode": "^1.95.0",
     "@vscode/test-electron": "^2.4.1",
-    "@vscode/vsce": "^3.2.1",
-    "esbuild": "^0.24.0",
-    "oxlint": "^0.14.0",
+    "@vscode/vsce": "^3.2.2",
+    "esbuild": "^0.24.2",
+    "oxlint": "^0.15.9",
     "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.4",
     "vscode-languageclient": "^9.0.1"
   },
+  "packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4",
   "pnpm": {
     "overrides": {
-      "@azure/msal-node@>=2.7.0 <2.9.2": ">=2.9.2",
-      "@azure/identity@<4.2.1": ">=4.2.1",
-      "cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5"
+      "nanoid@<3.3.8": ">=3.3.8",
+      "vite@>=5.0.0 <=5.4.11": ">=5.4.12"
     }
-  },
-  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
+  }
 }
