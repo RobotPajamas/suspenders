@@ -25,7 +25,7 @@
   ],
   "engines": {
     "node": ">=22.0.0",
-    "pnpm": ">=9.15.0",
+    "pnpm": ">=10.0.0",
     "vscode": ">=1.95.0"
   },
   "categories": [
@@ -262,26 +262,20 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.393"
+    "pyright": "^1.1.395"
   },
   "devDependencies": {
-    "@types/node": "^22.13.0",
+    "@types/node": "^22.13.5",
     "@types/vscode": "^1.95.0",
     "@vscode/test-electron": "^2.4.1",
     "@vscode/vsce": "^3.2.2",
-    "esbuild": "^0.24.2",
-    "oxlint": "^0.15.9",
-    "prettier": "^3.4.2",
+    "esbuild": "^0.25.0",
+    "oxlint": "^0.15.12",
+    "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4",
+    "vitest": "^3.0.7",
     "vscode-languageclient": "^9.0.1"
   },
-  "packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4",
-  "pnpm": {
-    "overrides": {
-      "nanoid@<3.3.8": ">=3.3.8",
-      "vite@>=5.0.0 <=5.4.11": ">=5.4.12"
-    }
-  }
+  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b"
 }
