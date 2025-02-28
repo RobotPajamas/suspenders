@@ -149,7 +149,6 @@ export async function peek(runner: Pants, target: string): Promise<PeekResult[]>
     goal: "peek",
     unscopedOptions: {
       "exclude-defaults": "",
-      // "include-goals": "",
     },
   };
   const unscopedOptions: Options = {

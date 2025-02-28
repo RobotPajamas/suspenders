@@ -5,6 +5,7 @@ import { logger } from "./logging";
 import { getPantsExecutable, shouldGenerateBuiltinsOnSave } from "./configuration";
 import { createLanguageClient, generateBuiltinsFile } from "./lsp/client";
 import { DidChangeConfigurationNotification, LanguageClient } from "vscode-languageclient/node";
+import { BuildCodeLensProvider } from "./codelens";
 
 // TODO: Destructure vscode imports
 let lspClient: LanguageClient;
@@ -41,6 +42,11 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("suspenders.testAll", () => {
       runGoalOnAllTargets("test", rootPath);
     })
+  );
+
+  const codelensProvider = new BuildCodeLensProvider(rootPath);
+  context.subscriptions.push(
+    vscode.languages.registerCodeLensProvider({ pattern: "**/BUILD" }, codelensProvider)
   );
 
   const sourceRootsProvider = new SourceRootsProvider(rootPath);

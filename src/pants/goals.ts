@@ -60,8 +60,9 @@ export type PeekResult = {
   target_type: string;
   /**
    * The goals that can be run on this target. e.g. `["package", "run"]`
+   * TODO: I think this should be optional - need to review how it gets parsed/peeked
    */
-  goals: string[];
+  goals?: string[];
 };
 
 export async function list(runner: Pants, target: string): Promise<Address[]> {
