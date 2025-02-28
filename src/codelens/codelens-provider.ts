@@ -70,10 +70,6 @@ export class BuildCodeLensProvider implements CodeLensProvider {
 
     return lenses;
   }
-  // resolveCodeLens?(codeLens: CodeLens, token: CancellationToken): ProviderResult<CodeLens> {
-  //     console.log("resolveCodeLens", codeLens);
-  //     return null;
-  // }
 }
 
 /**
