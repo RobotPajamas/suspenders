@@ -265,22 +265,22 @@
     "pyright": "^1.1.395"
   },
   "devDependencies": {
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.15.29",
     "@types/vscode": "^1.95.0",
-    "@vscode/test-electron": "^2.4.1",
-    "@vscode/vsce": "^3.2.2",
-    "esbuild": "^0.25.0",
-    "oxlint": "^0.15.12",
-    "prettier": "^3.5.2",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.4.2",
+    "esbuild": "^0.25.5",
+    "oxlint": "^0.17.0",
+    "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.7",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.0",
     "vscode-languageclient": "^9.0.1"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
+  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912",
   "pnpm": {
     "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0"
+      "tar-fs@<=2.1.2": ">=2.1.3"
     }
   }
 }
