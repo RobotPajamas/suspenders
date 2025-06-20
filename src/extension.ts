@@ -8,7 +8,6 @@ import { DidChangeConfigurationNotification, LanguageClient } from "vscode-langu
 
 // TODO: Destructure vscode imports
 let lspClient: LanguageClient;
-// let disposables: vscode.Disposable[] = [];
 
 const extensionName = "robotpajamas.vscode-suspenders";
 const extensionVersion = "0.0.2";
@@ -31,45 +30,20 @@ export async function activate(context: vscode.ExtensionContext) {
       ? vscode.workspace.workspaceFolders[0].uri.fsPath
       : undefined;
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.checkAll", () => {
-      runGoalOnAllTargets("check", rootPath);
-    })
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.fmtAll", () => {
-      runGoalOnAllTargets("fmt", rootPath);
-    })
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.lintAll", () => {
-      runGoalOnAllTargets("lint", rootPath);
-    })
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.testAll", () => {
-      runGoalOnAllTargets("test", rootPath);
-    })
-  );
-
   const sourceRootsProvider = new SourceRootsProvider(rootPath);
   vscode.window.registerTreeDataProvider("source-roots", sourceRootsProvider);
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.source-roots.refresh", () =>
-      sourceRootsProvider.refresh()
-    )
-  );
 
   const targetsProvider = new TargetsProvider(rootPath);
   vscode.window.registerTreeDataProvider("targets", targetsProvider);
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.targets.refresh", () => targetsProvider.refresh())
-  );
 
-  vscode.commands.executeCommand("setContext", "suspenders:isActivated", true);
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand("suspenders.generateBuiltins", async () => {
+  const commands: Record<string, () => void> = {
+    "suspenders.checkAll": () => runGoalOnAllTargets("check", rootPath),
+    "suspenders.fmtAll": () => runGoalOnAllTargets("fmt", rootPath),
+    "suspenders.lintAll": () => runGoalOnAllTargets("lint", rootPath),
+    "suspenders.testAll": () => runGoalOnAllTargets("test", rootPath),
+    "suspenders.source-roots.refresh": () => sourceRootsProvider.refresh(),
+    "suspenders.targets.refresh": () => targetsProvider.refresh(),
+    "suspenders.generateBuiltins": async () => {
       try {
         await generateBuiltinsFile(rootPath);
         lspClient.sendNotification(DidChangeConfigurationNotification.type, {
@@ -88,8 +62,13 @@ export async function activate(context: vscode.ExtensionContext) {
           logger.show();
         }
       }
-    })
-  );
+    },
+  };
+  for (const [commandId, handler] of Object.entries(commands)) {
+    context.subscriptions.push(vscode.commands.registerCommand(commandId, handler));
+  }
+
+  vscode.commands.executeCommand("setContext", "suspenders:isActivated", true);
 
   // Hardcoding this in as a POC - TODO Pull into LSP layer
   lspClient = createLanguageClient(context);
@@ -113,13 +92,12 @@ export async function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(
     vscode.workspace.onDidSaveTextDocument((doc) => {
-      // TODO: An optimization would be to create or dispose of this subscription when config changes
+      // TODO: An optimization would be to create or dispose of this subscription when config changes (e.g. using `onDidChangeConfiguration`)
       if (!shouldGenerateBuiltinsOnSave()) {
         return;
       }
-      logger.log(`DidSave: ${doc.fileName} - ${doc.isDirty}`);
+      logger.debug(`DidSave: ${doc.fileName} - ${doc.isDirty}`);
       if (doc.fileName === `${rootPath}/pants.toml` && isTomlDirty) {
-        // TODO: Should notify the user, and then self-dismiss when complete
         vscode.commands.executeCommand("suspenders.generateBuiltins");
         isTomlDirty = false;
       }
@@ -128,10 +106,7 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-  // if (disposables) {
-  //   disposables.forEach((item) => item.dispose());
-  // }
-  // disposables = [];
+  // TODO: Shutdown the LSP?
 }
 
 // TODO: Kibosh this - many better ways coming up than this using the new `peek`
