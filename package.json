@@ -250,6 +250,7 @@
   "scripts": {
     "vscode:prepublish": "pnpm run build-base --minify",
     "build-base": "pnpm run clean && esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "build-tests": "esbuild ./tests/e2e/**/* --outdir=build/ --format=cjs --platform=node",
     "build": "pnpm run build-base --sourcemap",
     "package": "pnpm vsce package --out dist",
     "clean": "rm -rf dist/",
@@ -258,6 +259,7 @@
     "lint:fix": "pnpm format && oxlint --fix",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "pnpm run build-tests && vscode-test",
     "test:watch": "vitest",
     "watch": "pnpm run build-base --sourcemap --watch"
   },
@@ -265,8 +267,9 @@
     "pyright": "^1.1.402"
   },
   "devDependencies": {
-    "@types/node": "^22.15.29",
+    "@types/node": "^24.0.3",
     "@types/vscode": "^1.95.0",
+    "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^3.5.0",
     "esbuild": "^0.25.5",
