@@ -1,5 +1,6 @@
 import { WorkspaceConfiguration, workspace } from "vscode";
 
+// TODO: Create constants for config - as some are re-used around the app
 export const namespace = "suspenders";
 
 /**
