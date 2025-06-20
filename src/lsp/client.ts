@@ -9,7 +9,7 @@ import {
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
-import { logger } from "../logging";
+import { logger, withStatus } from "../logging";
 import * as vscode from "vscode";
 import { Pants } from "../pants";
 import { generateBuiltins } from "./builtins";
@@ -82,7 +82,9 @@ export function createLanguageClient(context: vscode.ExtensionContext): Language
 export async function generateBuiltinsFile(rootPath?: string) {
   logger.info("Generating __builtins__.pyi file");
   const runner = new Pants(rootPath ?? "");
-  const result = await runner.execute([{ goal: "help-all" }]);
+  const result = await withStatus("Generating __builtins__.pyi file", () =>
+    runner.execute([{ goal: "help-all" }])
+  );
 
   const basePath = path.join(runner.buildRoot, ".pants.d", "suspenders");
 
