@@ -35,3 +35,16 @@ class Logger {
 }
 
 export const logger = new Logger();
+
+export async function withStatus<T>(title: string, task: () => Promise<T>): Promise<T> {
+  return vscode.window.withProgress(
+    {
+      location: vscode.ProgressLocation.Window,
+      title,
+      cancellable: false,
+    },
+    () => {
+      return task();
+    }
+  );
+}

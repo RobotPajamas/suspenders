@@ -67,7 +67,17 @@ export async function activate(context: vscode.ExtensionContext) {
           settings: null,
         });
       } catch (e) {
-        logger.error(`Error generating builtins file: ${e}`);
+        // TODO: Look into a more homogenous logging system - when I actually log more than 1 thing
+        // e.g. update logger with a ProgressLocation - so we can log and also show UI in one place
+        logger.error(`Error generating __builtins__.pyi file: ${e}`);
+        vscode.window.setStatusBarMessage("$(error) Build failed", 5000);
+        const choice = await vscode.window.showErrorMessage(
+          "Error generating __builtins__.pyi file",
+          "Open Logs"
+        );
+        if (choice === "Open Logs") {
+          logger.show();
+        }
       }
     })
   );
