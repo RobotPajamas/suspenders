@@ -17,6 +17,15 @@ export async function activate(context: vscode.ExtensionContext) {
   logger.info(`Extension name: ${extensionName}`);
   logger.info(`Extension version: ${extensionVersion}`);
 
+  await checkPantsExecutableExists();
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(async (event) => {
+      if (event.affectsConfiguration("suspenders.executable")) {
+        await checkPantsExecutableExists();
+      }
+    })
+  );
+
   const rootPath =
     vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0
       ? vscode.workspace.workspaceFolders[0].uri.fsPath
@@ -70,7 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
         // TODO: Look into a more homogenous logging system - when I actually log more than 1 thing
         // e.g. update logger with a ProgressLocation - so we can log and also show UI in one place
         logger.error(`Error generating __builtins__.pyi file: ${e}`);
-        vscode.window.setStatusBarMessage("$(error) Build failed", 5000);
+        // vscode.window.setStatusBarMessage("$(error) Build failed", 5000);
         const choice = await vscode.window.showErrorMessage(
           "Error generating __builtins__.pyi file",
           "Open Logs"
@@ -135,4 +144,22 @@ function runGoalOnAllTargets(name: string, cwd?: string): void {
   const subprocess = proc.spawn(getPantsExecutable(), [name, "::"], options);
   subprocess.stdout?.on("data", (data) => logger.log(data.toString()));
   subprocess.stderr?.on("data", (data) => logger.log(data.toString()));
+}
+
+// TODO: Build out more infrastructure around SciePants and versioning
+async function checkPantsExecutableExists() {
+  const executable = getPantsExecutable();
+  const result = proc.spawnSync(executable, {
+    env: { ...process.env, PANTS_BOOTSTRAP_VERSION: "report" },
+    timeout: 100, // Arbitrarily small timeout
+  });
+  if (result.error) {
+    const choice = await vscode.window.showErrorMessage(
+      `Unable to find Pants executable: ${executable}`,
+      "Open Settings"
+    );
+    if (choice === "Open Settings") {
+      vscode.commands.executeCommand("workbench.action.openSettings", "suspenders.executable");
+    }
+  }
 }
