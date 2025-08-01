@@ -276,7 +276,7 @@
     "oxlint": "^1.2.0",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4",
     "vscode-languageclient": "^9.0.1"
   },
