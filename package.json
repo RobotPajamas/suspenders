@@ -273,7 +273,7 @@
     "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^3.5.0",
     "esbuild": "^0.25.5",
-    "oxlint": "^1.2.0",
+    "oxlint": "^1.14.0",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.8.3",
