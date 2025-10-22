@@ -264,21 +264,21 @@
     "watch": "pnpm run build-base --sourcemap --watch"
   },
   "dependencies": {
-    "pyright": "^1.1.405"
+    "pyright": "^1.1.406"
   },
   "devDependencies": {
-    "@types/node": "^24.6.1",
-    "@types/vscode": "^1.104.0",
-    "@vscode/test-cli": "^0.0.11",
+    "@types/node": "^24.9.1",
+    "@types/vscode": "^1.105.0",
+    "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^3.6.2",
-    "esbuild": "^0.25.10",
-    "oxlint": "^1.19.0",
+    "esbuild": "^0.25.11",
+    "oxlint": "^1.24.0",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
     "vscode-languageclient": "^9.0.1"
   },
-  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
+  "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
 }
