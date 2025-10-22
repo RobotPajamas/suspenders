@@ -5,5 +5,19 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    allow:
+      - dependency-type: "all"
+    groups:
+      js-security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      js-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
