@@ -268,7 +268,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "@types/vscode": "^1.105.0",
+    "@types/vscode": "^1.106.1",
     "@vitest/coverage-v8": "^4.0.10",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
